@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('quantity',8,2,true);
             $table->text('reason');
             $table->foreignId('measurement_unit_id')->constrained();
+            $table->enum('state',['PENDIENTE','CREADO','RECHAZADO']);
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('warehouse_department_id')->constrained();
             $table->decimal('quantity',8,2,true);
             $table->foreignId('user_id')->constrained();
+            $table->text('reason')->nullable();
             $table->timestamps();
         });
     }

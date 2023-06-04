@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class RequirementDetail extends Model
 {
     use HasFactory;
+
+    public function Product(){
+        return $this->belongsTo(Product::class);
+    }
+    public function Requirement(){
+        return $this->belongsTo(Requirement::class);
+    }
 }
