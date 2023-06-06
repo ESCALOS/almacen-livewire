@@ -39,7 +39,7 @@
                                     {{ $session->ip_address }},
 
                                     @if ($session->is_current_device)
-                                        <span class="text-green-500 font-semibold">{{ __('This device') }}</span>
+                                        <span class="font-semibold text-green-500">{{ __('This device') }}</span>
                                     @else
                                         {{ __('Last active') }} {{ $session->last_active }}
                                     @endif
@@ -61,17 +61,13 @@
             </x-action-message>
         </div>
 
-        <!-- Log Out Other Devices Confirmation Modal -->
-        <x-dialog-modal wire:model="confirmingLogout">
-            <x-slot name="title">
-                {{ __('Log Out Other Browser Sessions') }}
-            </x-slot>
 
-            <x-slot name="content">
+        <x-modal wire:model="confirmingLogout">
+            <x-card title="{{ __('Log Out Other Browser Sessions') }}">
                 {{ __('Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.') }}
 
                 <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
-                    <x-input type="password" class="mt-1 block w-3/4"
+                    <x-input type="password" class="block w-3/4 mt-1"
                                 autocomplete="current-password"
                                 placeholder="{{ __('Password') }}"
                                 x-ref="password"
@@ -80,19 +76,13 @@
 
                     <x-input-error for="password" class="mt-2" />
                 </div>
-            </x-slot>
-
-            <x-slot name="footer">
-                <x-secondary-button wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
-
-                <x-button class="ml-3"
-                            wire:click="logoutOtherBrowserSessions"
-                            wire:loading.attr="disabled">
-                    {{ __('Log Out Other Browser Sessions') }}
-                </x-button>
-            </x-slot>
-        </x-dialog-modal>
+                <x-slot name="footer">
+                    <div class="flex justify-end gap-x-4">
+                        <x-button flat label="{{__('Cancel') }}" x-on:click="close" wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled"/>
+                        <x-button primary label="{{ __('Log Out Other Browser Sessions') }}" wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled"/>
+                    </div>
+                </x-slot>
+            </x-card>
+        </x-modal>
     </x-slot>
 </x-action-section>

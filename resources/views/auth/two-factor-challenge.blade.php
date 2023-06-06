@@ -19,17 +19,15 @@
                 @csrf
 
                 <div class="mt-4" x-show="! recovery">
-                    <x-label for="code" value="{{ __('Code') }}" />
-                    <x-input id="code" class="block mt-1 w-full" type="text" inputmode="numeric" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
+                    <x-input label="{{ __('Code') }}" id="code" class="block w-full mt-1" type="text" inputmode="numeric" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
                 </div>
 
                 <div class="mt-4" x-cloak x-show="recovery">
-                    <x-label for="recovery_code" value="{{ __('Recovery Code') }}" />
-                    <x-input id="recovery_code" class="block mt-1 w-full" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
+                    <x-input label="{{ __('Recovery Code') }}" id="recovery_code" class="block w-full mt-1" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer"
+                    <button type="button" class="text-sm text-gray-600 underline cursor-pointer dark:text-gray-400 hover:text-gray-900"
                                     x-show="! recovery"
                                     x-on:click="
                                         recovery = true;
@@ -38,7 +36,7 @@
                         {{ __('Use a recovery code') }}
                     </button>
 
-                    <button type="button" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer"
+                    <button type="button" class="text-sm text-gray-600 underline cursor-pointer dark:text-gray-400 hover:text-gray-900"
                                     x-cloak
                                     x-show="recovery"
                                     x-on:click="
@@ -48,9 +46,7 @@
                         {{ __('Use an authentication code') }}
                     </button>
 
-                    <x-button class="ml-4">
-                        {{ __('Log in') }}
-                    </x-button>
+                    <x-button type="submit" class="ml-4" primary label="{{ __('Log in') }}"/>
                 </div>
             </form>
         </div>
