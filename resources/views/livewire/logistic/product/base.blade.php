@@ -1,8 +1,8 @@
 <div class="w-full">
     <div class="grid items-center grid-cols-3 gap-4 p-6 bg-white">
-        <x-button rounded positive label="Registrar" wire:click="$emitTo('product.modal','abrirModal',0)"/>
-        <x-button rounded warning label="Editar" wire:click="$emitTo('product.modal','abrirModal',{{$productId}})"/>
-        <x-button rounded negative label="Eliminar" wire:click='delete'/>
+        <x-button rounded positive label="Registrar" wire:click="$emitTo('logistic.product.modal','openModal',0)"/>
+        <x-button rounded warning label="Editar" wire:click="$emitTo('logistic.product.modal','openModal',{{$productId}})"/>
+        <x-button rounded spinner negative label="Eliminar" wire:click='delete'/>
     </div>
 
     <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
@@ -53,4 +53,5 @@
         </div>
     </div>
     @livewire('logistic.product.modal')
+    @livewire('logistic.category.modal')
 </div>

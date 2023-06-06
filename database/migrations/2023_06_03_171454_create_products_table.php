@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('description')->nullable();
-            $table->decimal('price',8,2,true);
             $table->foreignId('category_id')->constrained();
             $table->foreignId('measurement_unit_id')->constrained();
             $table->timestamps();

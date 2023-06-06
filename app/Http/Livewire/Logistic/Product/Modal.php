@@ -7,15 +7,30 @@ use Livewire\Component;
 class Modal extends Component
 {
     public $open;
+    public $productId;
+    public $name;
+    public $description;
+    public $measurementUnit;
+    public $category;
 
-    protected $listeners = ['OpenModal'];
+    protected $listeners = ['openModal','putCategory'];
 
     public function mount(){
         $this->open = false;
+        $this->productId = 0;
+        $this->name = '';
+        $this->description = '';
+        $this->measurementUnit = '';
+        $this->category = '';
     }
 
-    public function OpenModal() {
+    public function openModal($id) {
+        $this->productId = $id;
         $this->open = true;
+    }
+
+    public function putCategory($id) {
+        $this->category = $id;
     }
 
     public function render()
