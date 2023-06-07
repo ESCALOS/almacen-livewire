@@ -19,8 +19,8 @@ class Modal extends Component
 
     public function rules(){
         return [
-            'name' => 'required|unique:measurement_units:name,'.$this->measurementUnitId,
-            'abbreviation' => 'required|unique:measurement_units:abbreviation,'.$this->abbreviation
+            'name' => 'required|unique:measurement_units,name,'.$this->measurementUnitId,
+            'abbreviation' => 'required|unique:measurement_units,abbreviation,'.$this->abbreviation
         ];
     }
 
@@ -51,17 +51,20 @@ class Modal extends Component
         $this->validate();
         if($this->measurementUnitId == 0){
             $measurementUnit = new MeasurementUnit();
+        }else{
+            $measurementUnit = MeasurementUnit::find($this->measurementUnitId);
+        }
             $measurementUnit->name = strtoupper($this->name);
-            $measurementUnit->abbreviation = $this->abbreviation;
+            $measurementUnit->abbreviation = strtoupper($this->abbreviation);
             $measurementUnit->save();
             $this->emitTo('logistic.product.modal','putMeasurementUnit',$measurementUnit->id);
             $this->open = false;
-            $this->alert('success', '!Unidad de Medida Agregada!', [
+            $action = $this->measurementUnitId == 0 ? 'Agregada' : 'Editada';
+            $this->alert('success', '¡Unidad de Medida '.$action.'!', [
                 'position' => 'top-right',
                 'timer' => 2000,
                 'toast' => true,
             ]);
-        }
     }
 
     public function render()

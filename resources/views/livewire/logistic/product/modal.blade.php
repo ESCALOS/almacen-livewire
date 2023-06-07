@@ -1,7 +1,7 @@
 <x-modal.card title="{{ $productId == 0 ? 'Registrar' : 'Editar' }} Producto" blur wire:model.defer="open">
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <x-input label="Nombre" placeholder="Nombre del Producto" />
-        <x-input label="Descripción" placeholder="Descripcion del Producto" />
+        <x-input label="Nombre" placeholder="Nombre del Producto" wire:model.defer="name"/>
+        <x-input label="Descripción" placeholder="Descripcion del Producto" wire:model.defer="description"/>
 
         <div class="grid grid-cols-12 sm:grid-cols-6">
             <div class="col-span-10 sm:col-span-5">
@@ -31,7 +31,7 @@
                 />
             </div>
             <div class="col-span-2 mt-6 ml-3 sm:col-span-1">
-                <x-button.circle positive teal label="+" wire:click="$emitTo('logistic.category.modal','openModal',0)"/>
+                <x-button.circle positive teal label="+" wire:click="$emitTo('logistic.measurement-unit.modal','openModal',0)"/>
             </div>
         </div>
     </div>

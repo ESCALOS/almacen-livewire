@@ -46,17 +46,20 @@ class Modal extends Component
         $this->validate();
         if($this->categoryId == 0){
             $category = new Category();
+        }else{
+            $category = Category::find($this->categoryId);
+        }
             $category->name = strtoupper($this->name);
-            $category->description = $this->description;
+            $category->description = strtoupper($this->description);
             $category->save();
             $this->emitTo('logistic.product.modal','putCategory',$category->id);
             $this->open = false;
-            $this->alert('success', '!Categoría Agregada!', [
+            $action = $this->categoryId == 0 ? 'Agregada' : 'Editada';
+            $this->alert('success', '!Categoría '.$action.'!', [
                 'position' => 'top-right',
                 'timer' => 2000,
                 'toast' => true,
             ]);
-        }
     }
 
     public function render()

@@ -54,4 +54,5 @@
     </div>
     @livewire('logistic.product.modal')
     @livewire('logistic.category.modal')
+    @livewire('logistic.measurement-unit.modal')
 </div>
