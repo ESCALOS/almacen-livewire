@@ -3,7 +3,7 @@
         <x-input label="Nombre" placeholder="Nombre del Producto" wire:model.defer="name"/>
         <x-input label="Descripción" placeholder="Descripcion del Producto" wire:model.defer="description"/>
 
-        <div class="grid grid-cols-12 sm:grid-cols-6">
+        <div class="grid grid-cols-12">
             <div class="col-span-10 sm:col-span-5">
                 <x-select
                     label="Categoria"
@@ -14,13 +14,13 @@
                     option-value="id"
                 />
             </div>
-            <div class="col-span-2 mt-6 ml-3 sm:col-span-1">
+            <div class="col-span-2 mt-6 ml-3">
                 <x-button.circle positive teal label="+" wire:click="$emitTo('logistic.category.modal','openModal',0)"/>
             </div>
         </div>
 
-        <div class="grid grid-cols-12 sm:grid-cols-6">
-            <div class="col-span-10 sm:col-span-5">
+        <div class="grid grid-cols-12>
+            <div class="col-span-10>
                 <x-select
                     label="Unidad de Medida"
                     wire:model.defer="measurementUnit"
@@ -30,7 +30,7 @@
                     option-value="id"
                 />
             </div>
-            <div class="col-span-2 mt-6 ml-3 sm:col-span-1">
+            <div class="col-span-2 mt-6 ml-3">
                 <x-button.circle positive teal label="+" wire:click="$emitTo('logistic.measurement-unit.modal','openModal',0)"/>
             </div>
         </div>
@@ -42,7 +42,7 @@
 
             <div class="flex">
                 <x-button flat label="{{ __('Cancel') }}" x-on:click="close" />
-                <x-button primary label="{{ __('Save') }}" wire:click="save" />
+                <x-button primary spinner label="{{ __('Save') }}" wire:click="save"/>
             </div>
         </div>
     </x-slot>

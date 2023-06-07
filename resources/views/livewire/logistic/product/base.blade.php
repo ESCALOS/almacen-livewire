@@ -1,12 +1,32 @@
 <div class="w-full">
     <div class="grid items-center grid-cols-3 gap-4 p-6 bg-white">
-        <x-button rounded positive label="Registrar" wire:click="$emitTo('logistic.product.modal','openModal',0)"/>
-        <x-button rounded warning label="Editar" wire:click="$emitTo('logistic.product.modal','openModal',{{$productId}})"/>
-        <x-button rounded spinner negative label="Eliminar" wire:click='delete'/>
+        <x-button rounded positive label="Registrar" wire:click="openModal(0)"/>
+        <x-button rounded warning label="Editar" wire:click="openModal(1)"/>
+        <x-button rounded spinner='delete' negative label="Eliminar" wire:click='delete'/>
     </div>
 
-    <div class="py-2" style="padding-left: 1rem; padding-right:1rem">
-        <x-input type="text" style="height:40px;width: 100%" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
+    <div class="p-4 grid grid-cols-12 gap-4">
+        <div class="col-span-12 sm:col-span-6">
+            <x-input type="text" wire:model.lazy="search" placeholder="Escriba algo y presione enter para buscar"/>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <x-select
+                wire:model.defer="category"
+                placeholder="Categoria"
+                :async-data="route('api.category')"
+                option-label="name"
+                option-value="id"
+            />
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <x-select
+                wire:model.defer="measurementUnit"
+                placeholder="Unidad de medida"
+                :async-data="route('api.measurement-unit')"
+                option-label="name"
+                option-value="id"
+            />
+        </div>
     </div>
     @if ($products->count())
     <table class="w-full overflow-x-scroll table-fixed" wire:loading.remove wire:target='getProducts'>
@@ -16,7 +36,13 @@
                     <span class="block">{{ __('Name') }}</span>
                 </th>
                 <th class="py-3 text-center">
-                    <span class="block">{{ __('Price') }}</span>
+                    <span class="block">{{ __('Description') }}</span>
+                </th>
+                <th class="py-3 text-center">
+                    <span class="block">{{ __('Category') }}</span>
+                </th>
+                <th class="py-3 text-center">
+                    <span class="block">{{ __('Measurement Unit') }}</span>
                 </th>
             </tr>
         </thead>
@@ -31,6 +57,16 @@
                     <td class="py-3 text-center">
                         <div>
                             <span class="font-medium">{{ $product->description }}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 text-center">
+                        <div>
+                            <span class="font-medium">{{ $product->Category->name }}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 text-center">
+                        <div>
+                            <span class="font-medium">{{ $product->MeasurementUnit->name }}</span>
                         </div>
                     </td>
                 </tr>

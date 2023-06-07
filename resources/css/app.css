@@ -5,11 +5,17 @@
 [x-cloak] {
     display: none;
 }
-
+.col-span-3 {	grid-column: span 3 / span 3; }
 .col-span-10 {	grid-column: span 10 / span 10; }
 
 @media (min-width: 640px) {
+    .sm\:col-span-3 {
+        grid-column: span 3 / span 3;
+    }
     .sm\:col-span-5 {
         grid-column: span 5 / span 5;
+    }
+    .sm\:col-span-6 {
+        grid-column: span 6 / span 6;
     }
 }

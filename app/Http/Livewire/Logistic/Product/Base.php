@@ -16,6 +16,10 @@ class Base extends Component
     public $search;
     public $buttonActived;
     public $model;
+    public $category;
+    public $measurementUnit;
+
+    protected $listeners = ['getProducts'];
 
     public function mount(){
         $this->productId = 0;
@@ -30,12 +34,39 @@ class Base extends Component
 
     }
 
+    public function openModal($id){
+        $pid = $id == 0 ? 0 : $this->productId;
+        if($id > 0 && $this->productId == 0){
+            $this->alert('info','Seleccione un producto para edtiarlo');
+        }else{
+            $this->emitTo('logistic.product.modal','openModal',$pid);
+            $this->alert('info', '¡Cargando...!', [
+                'position' => 'center',
+                'timer' => null,
+                'toast' => false,
+            ]);
+        }
+        
+    }
+
+    public function seleccionar($id){
+        if($this->productId != $id){
+            $this->productId = $id;
+        }
+    }
+
     public function delete(){
-        $this->alert('success', '!Producto Eliminado!', [
-            'position' => 'top-right',
-            'timer' => 2000,
-            'toast' => true,
-        ]);
+        if($this->productId == 0){
+            $this->alert('info','Seleccione un producto para eliminar');
+        }else{
+            Product::find($this->productId)->delete();
+            $this->productId = 0;
+            $this->alert('success', '!Producto Eliminado!', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        }
     }
 
     public function render()

@@ -47,7 +47,20 @@ class Modal extends Component
 
     public function openModal($id) {
         $this->productId = $id;
+        if($id > 0){
+            $product = Product::find($id);
+            $this->name = $product->name;
+            $this->description = $product->description;
+            $this->measurementUnit = $product->measurement_unit_id;
+            $this->category = $product->category_id;
+        }else{
+            $this->name = '';
+            $this->description = '';
+            $this->measurementUnit = '';
+            $this->category = '';
+        }
         $this->open = true;
+        $this->alert('success','Datos Cargados');
     }
 
     public function putCategory($id) {
@@ -72,13 +85,13 @@ class Modal extends Component
         $product->measurement_unit_id = $this->measurementUnit;
         $product->save();
         $this->open = false;
+        $this->emitTo('logistic.product.base','getProducts');
         $action = $this->productId == 0 ? 'Agregado' : 'Editado';
         $this->alert('success', '¡Producto '.$action.'!', [
             'position' => 'top-right',
             'timer' => 2000,
             'toast' => true,
         ]);
-        $this->productId = 0;
     }
 
     public function render()
