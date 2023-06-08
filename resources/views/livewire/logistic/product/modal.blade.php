@@ -4,7 +4,7 @@
         <x-input label="Descripción" placeholder="Descripcion del Producto" wire:model.defer="description"/>
 
         <div class="grid grid-cols-12">
-            <div class="col-span-10 sm:col-span-5">
+            <div class="col-span-10">
                 <x-select
                     label="Categoria"
                     wire:model.defer="category"
@@ -19,8 +19,8 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-12>
-            <div class="col-span-10>
+        <div class="grid grid-cols-12">
+            <div class="col-span-10">
                 <x-select
                     label="Unidad de Medida"
                     wire:model.defer="measurementUnit"
@@ -37,9 +37,10 @@
     </div>
 
     <x-slot name="footer">
-        <div class="flex justify-between gap-x-4">
+        <div class="flex justify-{{$productId != 0 ? 'between' : 'end'}} gap-x-4">
+            @if($productId != 0)
             <x-button flat negative label="{{ __('Delete') }}" wire:click="delete" />
-
+            @endif
             <div class="flex">
                 <x-button flat label="{{ __('Cancel') }}" x-on:click="close" />
                 <x-button primary spinner label="{{ __('Save') }}" wire:click="save"/>

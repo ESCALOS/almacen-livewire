@@ -4,13 +4,15 @@
         <x-input label="Abreviación" placeholder="Abreviaciòn" wire:model.defer='abbreviation'/>
     </div>
     <x-slot name="footer">
-        <div class="flex justify-between gap-x-4">
+    <div class="flex justify-{{$measurementUnitId != 0 ? 'between' : 'end'}} gap-x-4">
+            @if($measurementUnitId != 0)
             <x-button flat negative label="{{ __('Delete') }}" wire:click="delete" />
-
+            @endif
             <div class="flex">
                 <x-button flat label="{{ __('Cancel') }}" x-on:click="close" />
-                <x-button primary spinner label="{{ __('Save') }}" wire:click="save" />
+                <x-button primary spinner label="{{ __('Save') }}" wire:click="save"/>
             </div>
+        </div>
         </div>
     </x-slot>
 </x-modal.card>

@@ -4,12 +4,13 @@
         <x-input label="Descripción" placeholder="Descripcion de la Categoría" wire:model.defer='description'/>
     </div>
     <x-slot name="footer">
-        <div class="flex justify-between gap-x-4">
+    <div class="flex justify-{{$categoryId != 0 ? 'between' : 'end'}} gap-x-4">
+            @if($categoryId != 0)
             <x-button flat negative label="{{ __('Delete') }}" wire:click="delete" />
-
+            @endif
             <div class="flex">
                 <x-button flat label="{{ __('Cancel') }}" x-on:click="close" />
-                <x-button primary spinner label="{{ __('Save') }}" wire:click="save" />
+                <x-button primary spinner label="{{ __('Save') }}" wire:click="save"/>
             </div>
         </div>
     </x-slot>

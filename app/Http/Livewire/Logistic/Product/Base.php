@@ -13,25 +13,11 @@ class Base extends Component
     use LivewireAlert;
 
     public $productId;
-    public $search;
     public $buttonActived;
-    public $model;
-    public $category;
-    public $measurementUnit;
-
-    protected $listeners = ['getProducts'];
 
     public function mount(){
         $this->productId = 0;
-        $this->search = "";
         $this->buttonActived = false;
-    }
-
-    public function getProducts(){
-        return Product::when($this->search != "",function($q){
-            return $q->where('name','like',$this->search.'%');
-        })->paginate(10);
-
     }
 
     public function openModal($id){
@@ -73,8 +59,6 @@ class Base extends Component
     {
         $this->buttonActived = $this->productId > 0;
 
-        $products = $this->getProducts();
-
-        return view('livewire.logistic.product.base',compact('products'));
+        return view('livewire.logistic.product.base');
     }
 }

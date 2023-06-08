@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 [x-cloak] {
-    display: none;
+    display: none!important; ;
 }
 .col-span-3 {	grid-column: span 3 / span 3; }
 .col-span-10 {	grid-column: span 10 / span 10; }
+.min-w-full { min-width: 100%; }
 
 @media (min-width: 640px) {
     .sm\:col-span-3 {
