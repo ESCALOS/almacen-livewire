@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Logistic\Product;
 
+use App\Exports\ProductsExport;
 use App\Models\Category;
 use App\Models\MeasurementUnit;
 use Illuminate\Database\Eloquent\Builder;
+use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Product;
@@ -16,6 +18,10 @@ class ProductTable extends DataTableComponent
 {
     use LivewireAlert;
     protected $model = Product::class;
+    protected $listeners = [
+        'refreshDatatable' => '$refresh',
+        'clearSelected' => 'clearSelected',
+    ];
 
     public function configure(): void
     {
@@ -23,6 +29,7 @@ class ProductTable extends DataTableComponent
         $this->setSearchLazy();
         $this->setBulkActions([
             'delete' => 'Eliminar',
+            'export' => 'Exportar',
         ]);
     }
 
@@ -47,6 +54,9 @@ class ProductTable extends DataTableComponent
         ];
     }
 
+    public function edit($id){
+        $this->emitTo('logistic.product.modal','openModal',$id);
+    }
 
     public function filters(): array
     {
@@ -77,15 +87,33 @@ class ProductTable extends DataTableComponent
         ];
     }
 
-    public function delete(){
-        foreach ($this->getSelected() as $item) {
-            Product::find($item)->delete();
-        }
+    public function export()
+    {
+        $products = $this->getSelected();
+
         $this->clearSelected();
-        $this->alert('success', '!Productos Eliminado!', [
-            'position' => 'top-right',
-            'timer' => 2000,
-            'toast' => true,
-        ]);
+
+        return Excel::download(new ProductsExport(), 'users.xlsx');
+    }
+
+    public function delete(){
+       $eliminados = 0;
+        foreach ($this->getSelected() as $item) {
+            try{
+                Product::find($item)->delete();
+            }catch(\PDOException $e){
+                $this->alert('error', $e->getMessage());
+                return;
+            }
+            $eliminados++;
+        }
+        if($eliminados>0){
+            $this->clearSelected();
+            $this->alert('success', '!Se eliminó '.$eliminados.' productos!', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        }
     }
 }

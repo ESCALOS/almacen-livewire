@@ -53,6 +53,7 @@ class Modal extends Component
             $this->description = $product->description;
             $this->measurementUnit = $product->measurement_unit_id;
             $this->category = $product->category_id;
+            $this->alert('success','Datos Cargados');
         }else{
             $this->name = '';
             $this->description = '';
@@ -60,7 +61,6 @@ class Modal extends Component
             $this->category = '';
         }
         $this->open = true;
-        $this->alert('success','Datos Cargados');
     }
 
     public function putCategory($id) {
@@ -83,15 +83,33 @@ class Modal extends Component
         $product->description = strtoupper($this->description);
         $product->category_id = $this->category;
         $product->measurement_unit_id = $this->measurementUnit;
-        $product->save();
-        $this->open = false;
-        $this->emitTo('logistic.product.base','getProducts');
-        $action = $this->productId == 0 ? 'Agregado' : 'Editado';
-        $this->alert('success', '¡Producto '.$action.'!', [
-            'position' => 'top-right',
-            'timer' => 2000,
-            'toast' => true,
-        ]);
+        try{
+            $product->save();
+            $this->open = false;
+            $this->emit('refreshDatatable');
+            $action = $this->productId == 0 ? 'Agregado' : 'Editado';
+            $this->alert('success', '¡Producto '.$action.'!', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        }catch(\PDOException $e){
+            $this->alert('success', $e->getMessage(), [
+                'position' => 'center',
+                'timer' => 3500,
+                'toast' => false,
+            ]);
+        }
+    }
+
+    public function delete(){
+        try{
+            Product::find($this->productId)->delete();
+            $this->emit('clearSelected');
+            $this->open = false;
+        }catch(\PDOException $e){
+            $this->alert('error', $e->getMessage());
+        }
     }
 
     public function render()

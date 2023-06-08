@@ -16,4 +16,16 @@ class Product extends Model
     public function MeasurementUnit(){
         return $this->belongsTo(MeasurementUnit::class);
     }
+
+    public function WarehouseDetails(){
+        return $this->hasMany(WarehouseDetail::class);
+    }
+
+    public function RequirementDetails(){
+        return $this->hasMany(RequirementDetail::class);
+    }
+
+    public function RequirementSummaries(){
+        return $this->hasMany(RequirementSummary::class);
+    }
 }
