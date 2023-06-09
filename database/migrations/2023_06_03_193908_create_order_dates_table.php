@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('order_dates', function (Blueprint $table) {
             $table->id();
-            $table->date('start');
-            $table->date('end');
+            $table->datetime('start');
+            $table->datetime('end');
             $table->timestamps();
         });
     }

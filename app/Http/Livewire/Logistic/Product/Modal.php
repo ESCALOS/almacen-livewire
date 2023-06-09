@@ -53,7 +53,6 @@ class Modal extends Component
             $this->description = $product->description;
             $this->measurementUnit = $product->measurement_unit_id;
             $this->category = $product->category_id;
-            $this->alert('success','Datos Cargados');
         }else{
             $this->name = '';
             $this->description = '';

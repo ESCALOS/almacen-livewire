@@ -15,6 +15,9 @@
                     <x-nav-link href="{{ route('logistic.products') }}" :active="request()->routeIs('logistic.products')">
                         {{ __('Products') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('logistic.order-dates') }}" :active="request()->routeIs('logistic.order-dates')">
+                        {{ __('Order Dates') }}
+                    </x-nav-link>
                 </div>
             </div>
 

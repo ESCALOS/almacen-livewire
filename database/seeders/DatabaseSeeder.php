@@ -26,6 +26,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Gerencia'
         ]);
 
+        \App\Models\Category::factory(4)->create();
+
+        \App\Models\MeasurementUnit::factory(4)->create();
+
+        \App\Models\Product::factory(50)->create();
+
         \App\Models\User::factory()->create([
             'name' => 'Administrador',
             'email' => 'stornblood6969@gmail.com',
