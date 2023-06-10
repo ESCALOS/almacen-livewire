@@ -48,7 +48,6 @@ class ProductTable extends DataTableComponent
             Column::make("Unidad de Medida", "measurementunit.name")
                 ->sortable()
                 ->collapseOnTablet(),
-
             ComponentColumn::make('Acciones', 'id')
                 ->component('edit'),
         ];
