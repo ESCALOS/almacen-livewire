@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('requirement_id')->constrained();
             $table->string('product_name');
             $table->text('description');
-            $table->decimal('quantity',8,2,true);
+            $table->decimal('quantity',10,2,true);
             $table->text('reason');
             $table->foreignId('measurement_unit_id')->constrained();
             $table->enum('state',['PENDIENTE','CREADO','RECHAZADO']);

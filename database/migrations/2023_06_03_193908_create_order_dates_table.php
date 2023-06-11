@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->datetime('start');
             $table->datetime('end');
+            $table->boolean('closed')->default(false);
             $table->timestamps();
         });
     }

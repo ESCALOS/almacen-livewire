@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('department_id')->constrained();
             $table->foreignId('order_date_id')->constrained();
-            $table->enum('state',['PENDIENTE','VALIDADA','RECHAZADA']);
+            $table->enum('state',['PENDIENTE','VALIDADO','RECHAZADO']);
             $table->timestamps();
         });
     }

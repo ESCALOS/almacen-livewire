@@ -18,6 +18,9 @@
                     <x-nav-link href="{{ route('logistic.order-dates') }}" :active="request()->routeIs('logistic.order-dates')">
                         {{ __('Order Dates') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('logistic.requirements') }}" :active="request()->routeIs('logistic.requirements')">
+                        {{ __('Requirements') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -127,6 +130,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('logistic.products') }}" :active="request()->routeIs('logistic.products')">
                 {{ __('Products') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('logistic.order-dates') }}" :active="request()->routeIs('logistic.order-dates')">
+                {{ __('Order Dates') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('logistic.requirements') }}" :active="request()->routeIs('logistic.requirements')">
+                {{ __('Requirements') }}
             </x-responsive-nav-link>
         </div>
 

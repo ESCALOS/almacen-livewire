@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('partial_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('purchase_order_id')->constrained();
-            $table->decimal('amount',10,2);
+            $table->decimal('amount',10,2,true);
             $table->date('date');
             $table->timestamps();
         });

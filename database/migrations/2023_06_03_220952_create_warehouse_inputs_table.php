@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('warehouse_department_id')->constrained();
             $table->foreignId('purchase_order_detail_id')->constrained();
-            $table->decimal('quantity',8,2,true);
+            $table->decimal('quantity',10,2,true);
             $table->timestamps();
         });
     }

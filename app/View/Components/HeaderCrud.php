@@ -8,12 +8,14 @@ use Illuminate\View\Component;
 
 class HeaderCrud extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+
+    public $label;
+    public $action;
+
+    public function __construct($label='Registrar',$action='openModal')
     {
-        //
+        $this->label = $label;
+        $this->action = $action;
     }
 
     /**

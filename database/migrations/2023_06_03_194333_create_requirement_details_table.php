@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('requirement_id')->constrained();
-            $table->decimal('quantity',8,2,true);
+            $table->decimal('quantity',10,2,true);
             $table->decimal('validated_quantity',8,2,true)->default(0);
             $table->text('reason');
             $table->timestamps();
