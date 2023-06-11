@@ -99,7 +99,7 @@
                         </x-slot>
 
                         <x-dropdown.item icon="user-circle" label="{{ __('Profile') }}"  href="{{ route('profile.show') }}"/>
-                        <x-dropdown.item icon="arrow-circle-left" separator>
+                        <x-dropdown.item icon="logout" separator>
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
 

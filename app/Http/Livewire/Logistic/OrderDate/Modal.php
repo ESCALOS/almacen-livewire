@@ -46,8 +46,8 @@ class Modal extends Component
             $this->startDate = $orderDate->start;
             $this->endDate = $orderDate->end;
         }else{
-            $this->startDate = Carbon::today()->format('Y-m-d H:i:s');;
-            $this->endDate = Carbon::tomorrow()->format('Y-m-d H:i:s');;
+            $this->startDate = Carbon::today()->format('Y-m-d H:i:s');
+            $this->endDate = Carbon::tomorrow()->format('Y-m-d H:i:s');
         }
         $this->open = true;
     }
