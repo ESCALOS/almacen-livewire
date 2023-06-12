@@ -9,6 +9,8 @@ class MeasurementUnit extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','abbreviation'];
+
     public function Products(){
         return $this->hasMany(Product::class);
     }

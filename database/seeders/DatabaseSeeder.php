@@ -22,17 +22,17 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        \App\Models\Department::factory()->create([
+        /*\App\Models\Department::factory()->create([
             'name' => 'Gerencia'
         ]);
 
         \App\Models\Category::factory(4)->create();
 
         \App\Models\MeasurementUnit::factory(4)->create();
-
+*/
         \App\Models\Product::factory(50)->create();
 
-        \App\Models\User::factory()->create([
+        /*\App\Models\User::factory()->create([
             'name' => 'Administrador',
             'email' => 'stornblood6969@gmail.com',
             'department_id' => 1,
@@ -40,6 +40,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
-        ]);
+        ]);*/
     }
 }

@@ -4,7 +4,10 @@
             <p class="font-bold">{{ $slot }}</p>
         </div>
         <div>
-            <x-button rounded positive label="{{ $label }}" wire:click="{{ $action }}"/>
+            @if ($import)
+            <x-button rounded cyan label="Importar" icon="upload" wire:click='openImportModal'/>
+            @endif
+            <x-button rounded positive label="{{ $label }}" icon="plus" wire:click="{{ $action }}"/>
         </div>
     </div>
     <hr>

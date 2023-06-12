@@ -33,7 +33,7 @@
         x-transition:leave-end="opacity-0">
     </div>
 
-    <div class="w-full min-h-full transform flex items-end justify-center mx-auto {{ $align }} {{ $maxWidth }}"
+    <div class="w-full min-h-full transform flex items-start justify-center mx-auto {{ $align }} {{ $maxWidth }}"
         x-show="show"
         x-on:click.self="close"
         x-transition:enter="ease-out duration-300"

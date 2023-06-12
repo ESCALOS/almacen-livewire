@@ -15,7 +15,7 @@
                 />
             </div>
             <div class="col-span-2 mt-6 ml-3">
-                <x-button.circle positive teal label="+" wire:click="$emitTo('logistic.category.modal','openModal',0)"/>
+                <x-button.circle positive icon="plus" wire:click="$emitTo('logistic.category.modal','openModal',0)"/>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
                 />
             </div>
             <div class="col-span-2 mt-6 ml-3">
-                <x-button.circle positive teal label="+" wire:click="$emitTo('logistic.measurement-unit.modal','openModal',0)"/>
+                <x-button.circle positive icon="plus" wire:click="$emitTo('logistic.measurement-unit.modal','openModal',0)"/>
             </div>
         </div>
     </div>
