@@ -9,6 +9,8 @@ class OrderDate extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['closed'];
+
     public function Requirements(){
         return $this->hasMany(Requirement::class);
     }

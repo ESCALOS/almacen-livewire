@@ -1,23 +1,19 @@
 <div>
     <div class="flex justify-between p-4">
         <div class="px-4 text-2xl font-black">
-            <p class="font-bold">{{ $lastOrder ? 'Pedido del '.$fechaPedido : 'Pedido no abierto' }}</p>
+            <p class="font-bold">{{ $title }}</p>
         </div>
         <div>
-            @if (!$lastOrder)
-                <x-button rounded positive label="Abrir Pedido" wire:click="openModal"/>
-            @else
-                <x-button rounded warning label="Extender pedido" wire:click="openModal"/>
-                @if ($lastOrder->end && $lastOrder->end >= date('Y-m-d H:i:s'))
-                    <x-button rounded negative label="Cerrar Pedido" wire:click="close"/>
-                @else
-                    <x-button rounded positive label="Abrir Pedido" wire:click="openModal"/>
-                @endif
-            @endif
+        @if ($closed)
+            <x-button rounded positive label="Abrir" wire:click="openModal"/>
+        @else
+            <x-button rounded warning label="Modificar" wire:click="openModal"/>
+            <x-button rounded negative label="Cerrar" wire:click="closeOrder"/>
+        @endif
         </div>
     </div>
     <hr>
-    <x-modal.card max-width="sm" title="{{ $orderDateId == 0 ? 'Abrir ' : 'Extender' }} Pedido" blur wire:model.defer="open">
+    <x-modal.card max-width="sm" title="{{ $orderDateId == 0 ? 'Abrir ' : 'Modificar' }} Pedido" blur wire:model.defer="open">
         <x-datetime-picker
             label="Fecha de cierre"
             placeholder="Indique la fecha de cierre"
@@ -25,7 +21,6 @@
             wire:model="endDate"
             :min="today()"
         />
-        {{ $endDate }}
         <x-slot name="footer">
             <div class="flex justify-end gap-x-4">
                 <div class="flex">

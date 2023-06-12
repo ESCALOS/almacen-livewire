@@ -11,11 +11,13 @@ class Base extends Component
 {
     use LivewireAlert;
 
-    public $fechaPedido;
+    public $title;
     public $open;
     public $orderDateId;
     public $endDate;
+    public $closed;
 
+    protected $listeners = ['closeConfirmed'];
     public function rules(){
         return [
             'endDate' => 'required|date_format:Y-m-d H:i|after:now',
@@ -30,14 +32,48 @@ class Base extends Component
     }
 
     public function mount(){
-        $this->fechaPedido = '';
+        $this->title = '';
         $this->open = false;
         $this->orderDateId = 0;
         $this->endDate = '';
+        $this->closed = true;
     }
 
     public function openModal(){
+        if($this->orderDateId == 0){
+            $this->endDate = '';            
+        }else{
+            $this->endDate = OrderDate::find($this->orderDateId)->end;
+        }
         $this->open = true;
+    }
+
+    public function closeOrder(){
+        if($this->orderDateId == 0){
+            $this->alert('warning','No hay orden abierta');
+            $this->render();
+        }else{
+            $this->alert('question', '¿Estás seguro de cerrar el pedido?', [
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'Sí',
+                'showCancelButton' => true,
+                'cancelButtonText' => 'No',
+                'position' => 'center',
+                'toast' => false,
+                'onConfirmed' => 'closeConfirmed',
+                'timer' => 15000
+            ]);
+        }
+    }
+
+    public function closeConfirmed(){
+        if($this->orderDateId > 0){
+            $orderDate = OrderDate::find($this->orderDateId);
+            $orderDate->closed = true;
+            $orderDate->save();
+
+        }
+        $this->alert('success','Pedido Cerrado'.$this->orderDateId);
     }
 
     public function save(){
@@ -54,19 +90,30 @@ class Base extends Component
         }
         $lastOrder->end = $this->endDate;
         $lastOrder->save();
-        $this->alert('success', 'Pedido abierto');
+        $this->open = false;
+        if($this->orderDateId == 0){
+            $this->alert('success', 'Pedido Abierto');
+        }else{
+            $this->alert('success', 'Cierre de Pedido Modificado');
+        }
+        
     }
 
     public function render()
     {
         $lastOrder = OrderDate::latest()->first();
-        if($lastOrder && !$lastOrder->closed){
-            $this->orderDateId = $lastOrder->id;
-            $fecha = '2023-06-10 00:00:00';
-            $this->fechaPedido = Carbon::createFromFormat('Y-m-d H:i:s', $lastOrder->start)->isoFormat('D [de] MMMM [del] YYYY');
-        }else{
-            $this->fechaPedido = 'no hay pedido';
+        if(!$lastOrder || $lastOrder->closed){
+            $this->title = 'No hay pedido abierto';
             $this->orderDateId = 0;
+            $this->closed = true;
+        }else{
+            $this->closed = false;
+            if($lastOrder->end < Carbon::now()){
+                $this->title = 'Cerró '.Carbon::parse($lastOrder->end)->diffForHumans();
+            }else{
+                $this->orderDateId = $lastOrder->id;
+                $this->title = 'Cierra '.Carbon::parse($lastOrder->end)->diffForHumans();
+            }
         }
 
         return view('livewire.logistic.requirement.base',compact('lastOrder'));
