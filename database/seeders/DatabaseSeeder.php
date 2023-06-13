@@ -4,9 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,14 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //\App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        \App\Models\Department::factory()->create([
+        Department::create([
             'name' => 'Gerencia'
         ]);
 
@@ -32,10 +26,17 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Product::factory(50)->create();*/
 
-        \App\Models\User::factory()->create([
-            'name' => 'Administrador',
+        User::create([
+            'name' => 'Administador',
             'email' => 'stornblood6969@gmail.com',
+            'email_verified_at' => now(),
             'department_id' => 1,
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
         ]);
 
         $this->call([
