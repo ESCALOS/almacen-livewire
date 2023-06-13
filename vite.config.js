@@ -14,4 +14,16 @@ export default defineConfig({
             ],
         }),
     ],
+    build: {
+        rollupOptions: {
+          input: {
+            main: './src/main.js',
+          },
+        },
+      },
+      server: {
+        watch: {
+          ignored: ['node_modules', 'dist', 'vendor'],
+        },
+      },
 });
