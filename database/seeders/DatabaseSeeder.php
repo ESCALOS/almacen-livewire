@@ -20,17 +20,18 @@ class DatabaseSeeder extends Seeder
             'name' => 'Gerencia'
         ]);
 
-        /*\App\Models\Category::factory(4)->create();
+        \App\Models\Category::factory(4)->create();
 
         \App\Models\MeasurementUnit::factory(4)->create();
 
-        \App\Models\Product::factory(50)->create();*/
+        \App\Models\Product::factory(50)->create();
 
         User::create([
             'name' => 'Administador',
             'email' => 'stornblood6969@gmail.com',
             'email_verified_at' => now(),
             'department_id' => 1,
+            'is_admin' => true,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
