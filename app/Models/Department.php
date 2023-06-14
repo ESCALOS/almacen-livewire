@@ -9,6 +9,8 @@ class Department extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function Users(){
         return $this->hasMany(User::class);
     }

@@ -27,9 +27,11 @@ class User extends Authenticatable implements FilamentUser
      * @var array<int, string>
      */
     protected $fillable = [
+        'department_id',
         'name',
         'email',
         'password',
+        'is_admin'
     ];
 
     /**
