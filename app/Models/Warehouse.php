@@ -14,4 +14,8 @@ class Warehouse extends Model
     public function WarehouseDetails(){
         return $this->hasMany(Warehouse::class);
     }
+
+    public function Users(){
+        return $this->belongsToMany(User::class);
+    }
 }

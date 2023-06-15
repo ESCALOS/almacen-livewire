@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\WarehouseResource\Pages;
-use App\Filament\Resources\WarehouseResource\RelationManagers;
-use App\Models\Warehouse;
+use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Models\Category;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,32 +13,23 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class WarehouseResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = Warehouse::class;
+    protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?string $modelLabel = 'almacén';
-
-    protected static ?string $pluralModelLabel = 'almacenes';
+    protected static ?string $modelLabel = 'categoría';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Nombre')
-                    ->unique('warehouses','name',null,null,true)
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('location')
-                    ->label('Ubicación')
+                Forms\Components\TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\Select::make('users')
-                    ->label('Encargados')
-                    ->multiple()
-                    ->relationship('users','name')
             ]);
     }
 
@@ -46,12 +37,8 @@ class WarehouseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nombre'),
-                Tables\Columns\TextColumn::make('location')
-                    ->label('Ubicación'),
-                Tables\Columns\TextColumn::make('users.name')
-                    ->label('Encargados')
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('description'),
             ])
             ->filters([
                 //
@@ -68,7 +55,7 @@ class WarehouseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageWarehouses::route('/'),
+            'index' => Pages\ManageCategories::route('/'),
         ];
     }
 }

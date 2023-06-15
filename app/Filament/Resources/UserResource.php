@@ -39,6 +39,10 @@ class UserResource extends Resource
                     ->required()
                     ->hiddenOn('edit')
                     ->maxLength(255),
+                Forms\Components\Select::make('roles')
+                    ->label('Roles')
+                    ->multiple()
+                    ->relationship('roles','name'),
                 Forms\Components\Toggle::make('is_admin')
                     ->required(),
             ]);
@@ -48,11 +52,14 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('department.name')->label('Departamento'),
+                Tables\Columns\TextColumn::make('department.name')
+                    ->label('Departamento'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\IconColumn::make('is_admin')
                     ->boolean(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Roles')
             ])
             ->filters([
                 //
