@@ -25,9 +25,14 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category_id')
+                Forms\Components\Select::make('category_id')
+                    ->label('Categoría')
+                    ->searchable()
+                    ->relationship('category','name')
                     ->required(),
-                Forms\Components\TextInput::make('measurement_unit_id')
+                Forms\Components\Select::make('measurement_unit_id')
+                    ->searchable()
+                    ->relationship('measurementUnit','name')
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -41,8 +46,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('category_id'),
-                Tables\Columns\TextColumn::make('measurement_unit_id'),
+                Tables\Columns\TextColumn::make('category.name'),
+                Tables\Columns\TextColumn::make('measurementunit.name'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('description'),
             ])

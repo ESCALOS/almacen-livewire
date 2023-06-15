@@ -10,12 +10,12 @@ class Modal extends Component
 {
     use LivewireAlert;
 
-    public $open;
-    public $productId;
-    public $name;
-    public $description;
-    public $measurementUnit;
-    public $category;
+    public $open = false;
+    public $productId = 0;
+    public $name = '';
+    public $description = '';
+    public $measurementUnit = '';
+    public $category = '';
 
     protected $listeners = ['openModal','putCategory','putMeasurementUnit'];
 
@@ -36,15 +36,6 @@ class Modal extends Component
         ];
     }
 
-    public function mount(){
-        $this->open = false;
-        $this->productId = 0;
-        $this->name = '';
-        $this->description = '';
-        $this->category = '';
-        $this->measurementUnit = '';
-    }
-
     public function openModal($id) {
         $this->productId = $id;
         if($id > 0){
@@ -54,10 +45,7 @@ class Modal extends Component
             $this->measurementUnit = $product->measurement_unit_id;
             $this->category = $product->category_id;
         }else{
-            $this->name = '';
-            $this->description = '';
-            $this->measurementUnit = '';
-            $this->category = '';
+            $this->resetExcept('open','productId');
         }
         $this->open = true;
     }
