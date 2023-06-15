@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('warehouse_inputs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('warehouse_department_id')->constrained();
-            $table->foreignId('purchase_order_detail_id')->constrained();
+            $table->foreignId('purchase_order_detail_id')->nullable()->constrained();
             $table->decimal('quantity',10,2,true);
+            $table->decimal('price',10,2,true);
             $table->timestamps();
         });
     }

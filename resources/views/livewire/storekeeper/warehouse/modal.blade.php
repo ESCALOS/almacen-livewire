@@ -1,5 +1,5 @@
 <x-modal.card title="Ingresar Productos" blur wire:model.defer="open">
-    <div class="grid grid-cols-2 gap-4 pb-4 px-4">
+    <div class="grid grid-cols-2 gap-4 px-4 pb-4">
         <x-select
             label="Departamento"
             wire:model.defer="departmentId"
@@ -8,11 +8,10 @@
             option-label="name"
             option-value="id"
         />
-        <div class="text-center mt-6">        
+        <div class="mt-6 text-center">
             <x-button positive icon="plus" label="Agregar Producto" wire:click='addProduct'/>
         </div>
     </div>
-    Almacen: {{ $warehouseId }}
     <hr>
     <div class="grid grid-cols-12 gap-4 p-4">
         @foreach ($products as $index => $product)

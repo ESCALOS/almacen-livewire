@@ -1,14 +1,14 @@
 <div class="w-full">
     @if ($warehouseId)
-        <x-header-crud label="Ingresar Productos">Lista de Productos  {{ $warehouseId }}</x-header-crud>
+        <x-header-crud label="Ingresar Productos">Lista de Productos</x-header-crud>
         <div class="p-4">
             <livewire:storekeeper.warehouse.warehouse-detail-table>
         </div>
-        @livewire('storekeeper.warehouse.modal',['warehouseId' => $warehouseId])
+        <livewire:storekeeper.warehouse.modal :warehouseId="$warehouseId">
     @else
         <div>
             Sin almacen asignado
         </div>
     @endif
-    
+
 </div>

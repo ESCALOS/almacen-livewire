@@ -9,6 +9,8 @@ class WarehouseDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['warehouse_id', 'product_id', 'quantity', 'price'];
+
     public function Warehouse(){
         return $this->belongsTo(Warehouse::class);
     }
@@ -17,7 +19,7 @@ class WarehouseDetail extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function WarehouseDetails(){
-        return $this->hasMany(WarehouseDetail::class);
+    public function WarehouseDepartments(){
+        return $this->hasMany(WarehouseDepartment::class);
     }
 }

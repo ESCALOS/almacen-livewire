@@ -3,8 +3,13 @@
 namespace App\Http\Livewire\Storekeeper\Warehouse;
 
 use App\Models\Warehouse;
+use App\Models\WarehouseDepartment;
+use App\Models\WarehouseDetail;
+use App\Models\WarehouseInput;
+use Illuminate\Console\View\Components\Alert;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Support\Facades\DB;
 
 class Modal extends Component
 {
@@ -12,11 +17,11 @@ class Modal extends Component
 
     public $open = false;
     public $warehouseId;
-    public $departmentId = 0;
+    public $departmentId;
     public $products = [
         [
             'id' => '',
-            'name' => '',
+            'quantity' => '',
             'price' => '',
         ]
     ];
@@ -25,9 +30,19 @@ class Modal extends Component
 
     public function rules(){
         return [
-            'products.*.name' => 'required',
+            'departmentId' => 'required',
+            'products.*.id' => 'required',
             'products.*.quantity' => 'required|numeric',
             'products.*.price' => 'required|numeric',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'departmentId' => 'El departamento es requerido',
+            'products.*.id' => 'El producto es requerido',
+            'products.*.quantity' => 'La cantidad es requerida',
+            'products.*.price' => 'El precio es requerido',
         ];
     }
 
@@ -36,7 +51,7 @@ class Modal extends Component
     }
 
     public function openModal(){
-        $this->resetExcept('open');
+        $this->resetExcept('open','warehouseId');
         $this->open = true;
     }
 
@@ -55,8 +70,27 @@ class Modal extends Component
 
     public function save(){
         $this->validate();
+        DB::transaction(function(){
+            foreach ($this->products as $product) {
+                $warehouseDetail = WarehouseDetail::firstOrCreate([
+                    'warehouse_id' => $this->warehouseId,
+                    'product_id' => $product['id']
+                ]);
+
+                $warehouseDepartment = WarehouseDepartment::firstOrCreate([
+                    'warehouse_detail_id' => $warehouseDetail->id,
+                    'department_id' => $this->departmentId
+                ]);
+
+                $warehouseInput = new WarehouseInput();
+                $warehouseInput->warehouse_department_id = $warehouseDepartment->id;
+                $warehouseInput->quantity = $product['quantity'];
+                $warehouseInput->price = $product['price'];
+                $warehouseInput->save();
+            }
+        });
         $this->alert('success','Productos ingresados');
-        $this->reset();
+        $this->resetExcept('warehouseId');
     }
 
     public function render()

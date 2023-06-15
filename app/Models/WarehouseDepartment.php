@@ -9,6 +9,8 @@ class WarehouseDepartment extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['warehouse_detail_id','department_id'];
+
     public function Department(){
         return $this->belongsTo(Department::class);
     }
