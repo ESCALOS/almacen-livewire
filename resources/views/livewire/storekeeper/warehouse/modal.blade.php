@@ -1,15 +1,18 @@
 <x-modal.card title="Ingresar Productos" blur wire:model.defer="open">
-    <div class="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2">
+    <div class="grid grid-cols-2 gap-4 pb-4 px-4">
         <x-select
             label="Departamento"
             wire:model.defer="departmentId"
             placeholder="Seleccione un departamento"
-            :async-data="route('api.category')"
+            :async-data="route('api.deparment')"
             option-label="name"
             option-value="id"
         />
-        <x-button positive icon="plus" label="Agregar Producto" wire:click='addProduct'/>
+        <div class="text-center mt-6">        
+            <x-button positive icon="plus" label="Agregar Producto" wire:click='addProduct'/>
+        </div>
     </div>
+    Almacen: {{ $warehouseId }}
     <hr>
     <div class="grid grid-cols-12 gap-4 p-4">
         @foreach ($products as $index => $product)
@@ -18,7 +21,7 @@
                 label="Producto"
                 wire:model.defer="products.{{ $index }}.id"
                 placeholder="Seleccione"
-                :async-data="route('api.category')"
+                :async-data="route('api.product')"
                 option-label="name"
                 option-value="id"
             />

@@ -1,6 +1,6 @@
 @props(['margin' => false, 'rootClass' => null])
 
-<div class="fixed inset-0 z-20 flex items-end sm:z-10 sm:absolute sm:inset-auto transition-all ease-linear duration-150 {{ $rootClass }}"
+<div class="fixed inset-0 z-20 flex items-start sm:z-10 sm:absolute sm:inset-auto transition-all ease-linear duration-150 {{ $rootClass }}"
     style="display: none"
     x-cloak
     x-show="popover"

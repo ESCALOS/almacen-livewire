@@ -72,4 +72,8 @@ class User extends Authenticatable implements FilamentUser
     public function Department() {
         return $this->belongsTo(Department::class);
     }
+
+    public function Warehouse() {
+        return $this->belongsToMany(Warehouse::class);
+    }
 }
