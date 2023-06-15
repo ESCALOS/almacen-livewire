@@ -13,8 +13,10 @@ class HomeController extends Controller
             return redirect('login');
         }else{
             $user = User::find(auth()->user()->id);
-            if($user->hasRole('logistic')){
+            if($user->hasRole('logistica')){
                 return redirect()->route('logistic.products');
+            }elseif($user->hasRole('almacenero')){
+                return redirect()->route('storekeeper.warehouse');
             }else{
                 return view('dashboard');
             }

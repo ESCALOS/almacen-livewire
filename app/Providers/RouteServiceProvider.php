@@ -36,24 +36,20 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
 
-            Route::middleware('web','auth','role:admin')
-            ->prefix('admin')
-            ->group(base_path('routes/admin.php'));
-
-            Route::middleware('web','auth','role:requester')
-            ->prefix('requester')
+            Route::middleware('web','auth','role:solicitante')
+            ->prefix('solicitante')
             ->group(base_path('routes/requester.php'));
 
-            Route::middleware('web','auth','role:logistic')
+            Route::middleware('web','auth','role:logistica')
             ->prefix('logistica')
             ->group(base_path('routes/logistic.php'));
 
-            Route::middleware('web','auth','role:storekeeper')
-            ->prefix('storekeeper')
+            Route::middleware('web','auth','role:almacenero')
+            ->prefix('almacenero')
             ->group(base_path('routes/storekeeper.php'));
 
-            Route::middleware('web','auth','role:executive')
-            ->prefix('executive')
+            Route::middleware('web','auth','role:ejecutivo')
+            ->prefix('ejecutivo')
             ->group(base_path('routes/executive.php'));
         });
     }

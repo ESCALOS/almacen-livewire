@@ -15,22 +15,22 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::create([
-            'name' => 'executive',
+            'name' => 'ejecutivo',
             'guard_name' => 'web',
         ]);
 
         $logistic = Role::create([
-            'name' => 'logistic',
+            'name' => 'logistica',
             'guard_name' => 'web',
         ]);
 
         Role::create([
-            'name' => 'requester',
+            'name' => 'solicitante',
             'guard_name' => 'web',
         ]);
 
         Role::create([
-            'name' => 'storekeeper',
+            'name' => 'almacenero',
             'guard_name' => 'web',
         ]);
         User::find(1)->assignRole($logistic);
