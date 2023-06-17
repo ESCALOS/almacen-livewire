@@ -89,6 +89,7 @@ class Modal extends Component
                 $warehouseInput->save();
             }
         });
+        $this->emit('refreshDatatable');
         $this->alert('success','Productos ingresados');
         $this->resetExcept('warehouseId');
     }

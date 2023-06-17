@@ -1,5 +1,5 @@
 <div class="w-full">
-    @if ($warehouseId)
+    @if ($warehouseId > 0)
         <x-header-crud label="Ingresar Productos">Lista de Productos</x-header-crud>
         <div class="p-4">
             <livewire:storekeeper.warehouse.warehouse-detail-table>

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Storekeeper\Warehouse;
 
 use App\Models\User;
-use App\Models\UserWarehouse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -13,7 +12,11 @@ class Base extends Component
     public $warehouseId;
 
     public function mount(){
-        $this->warehouseId = User::find(Auth::user()->id)->Warehouse[0]->id;
+        try{
+            $this->warehouseId = User::find(Auth::user()->id)->Warehouse[0]->id;
+        }catch(\Exception $e){
+            $this->warehouseId = 0;
+        }
     }
 
     public function openModal(){

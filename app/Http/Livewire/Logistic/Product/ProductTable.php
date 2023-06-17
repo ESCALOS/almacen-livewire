@@ -26,7 +26,7 @@ class ProductTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
-        $this->setSearchLazy();
+        //$this->setSearchLazy();
         $this->setBulkActions([
             'delete' => 'Eliminar',
             'export' => 'Exportar',
