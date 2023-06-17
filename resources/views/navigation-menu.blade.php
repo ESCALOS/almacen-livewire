@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                @role('logistica')
+                @role('LOGISTICA')
                     <x-nav-link href="{{ route('logistic.products') }}" :active="request()->routeIs('logistic.products')">
                         {{ __('Products') }}
                     </x-nav-link>
@@ -20,7 +20,7 @@
                         {{ __('Requirements') }}
                     </x-nav-link>
                 @endrole
-                @role('almacenero')
+                @role('ALMACEN')
                     <x-nav-link href="{{ route('storekeeper.warehouse') }}" :active="request()->routeIs('storekeeper.warehouse')">
                         {{ __('Warehouse') }}
                     </x-nav-link>

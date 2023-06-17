@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('requirements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('department_id')->constrained();
-            $table->foreignId('order_date_id')->constrained();
-            $table->enum('state',['PENDIENTE','VALIDADO','RECHAZADO']);
+            $table->foreignId('product_id')->constrained();
+            $table->decimal('quantity',10,2,true);
+            $table->boolean('met')->default(false);
             $table->timestamps();
         });
     }

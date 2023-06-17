@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supplier_id')->constrained();
             $table->foreignId('currency_id')->constrained();
-            $table->enum('payment_method',['CREDITO','CONTADO']);
-            $table->boolean('cleared')->default(false);
-            $table->enum('state',['PENDIENTE','INCOMPLETA','COMPLETA','ANULADA']);
+            $table->boolean('credit')->default(false);
+            $table->boolean('liquidated')->default(false);
             $table->decimal('amount',10,2,true);
+            $table->decimal('liquidated_amount',10,2,true);
             $table->timestamps();
         });
     }
