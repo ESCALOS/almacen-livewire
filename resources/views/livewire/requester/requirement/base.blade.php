@@ -1,6 +1,7 @@
 <div>
-    <x-header-crud>Requerimientos</x-header-crud>
+    <x-header-crud label="Solicitar">Requerimientos</x-header-crud>
     <div class="p-4">
         <livewire:requester.requirement.requirement-table>
     </div>
+    <livewire:requester.requirement.modal>
 </div>

@@ -6,7 +6,6 @@ use App\Models\Warehouse;
 use App\Models\WarehouseDepartment;
 use App\Models\WarehouseDetail;
 use App\Models\WarehouseInput;
-use Illuminate\Console\View\Components\Alert;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
