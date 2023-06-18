@@ -25,6 +25,11 @@
                         {{ __('Warehouse') }}
                     </x-nav-link>
                 @endrole
+                @role('SOLICITANTE')
+                    <x-nav-link href="{{ route('requester.requirements') }}" :active="request()->routeIs('requester.requirements')">
+                        {{ __('Requirements') }}
+                    </x-nav-link>
+                @endrole
                 </div>
             </div>
 

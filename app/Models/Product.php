@@ -23,11 +23,7 @@ class Product extends Model
         return $this->hasMany(WarehouseDetail::class);
     }
 
-    public function RequirementDetails(){
-        return $this->hasMany(RequirementDetail::class);
-    }
-
-    public function RequirementSummaries(){
-        return $this->hasMany(RequirementSummary::class);
+    public function Requirements(){
+        return $this->hasMany(Requirement::class);
     }
 }

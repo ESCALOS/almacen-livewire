@@ -14,8 +14,4 @@ class MeasurementUnit extends Model
     public function Products(){
         return $this->hasMany(Product::class);
     }
-
-    public function RequirementNewProducts(){
-        return $this->hasMany(RequirementNewProduct::class);
-    }
 }

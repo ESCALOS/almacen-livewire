@@ -14,12 +14,4 @@ class Department extends Model
     public function Users(){
         return $this->hasMany(User::class);
     }
-
-    public function Requirements(){
-        return $this->hasMany(Requirement::class);
-    }
-
-    public function WarehouseDepartments(){
-        return $this->hasMany(WarehouseDepartment::class);
-    }
 }

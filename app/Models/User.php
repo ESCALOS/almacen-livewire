@@ -76,4 +76,12 @@ class User extends Authenticatable implements FilamentUser
     public function Warehouse() {
         return $this->belongsToMany(Warehouse::class);
     }
+
+    public function Requirements(){
+        return $this->hasMany(Requirement::class);
+    }
+
+    public function WarehouseOutputs(){
+        return $this->hasMany(WarehouseOutput::class);
+    }
 }

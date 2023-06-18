@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -17,6 +15,8 @@ class HomeController extends Controller
                 return redirect()->route('logistic.products');
             }elseif($user->hasRole('ALMACEN')){
                 return redirect()->route('storekeeper.warehouse');
+            }elseif($user->hasRole('SOLICITANTE')){
+                return redirect()->route('requester.requirements');
             }else{
                 return view('dashboard');
             }

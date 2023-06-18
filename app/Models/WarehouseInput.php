@@ -9,8 +9,8 @@ class WarehouseInput extends Model
 {
     use HasFactory;
 
-    public function WarehouseDepartment(){
-        return $this->belongsTo(WarehouseDepartment::class);
+    public function WarehouseDetail(){
+        return $this->belongsTo(WarehouseDetail::class);
     }
 
     public function PurchaseOrderDetail(){

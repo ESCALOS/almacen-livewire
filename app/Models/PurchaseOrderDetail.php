@@ -13,10 +13,6 @@ class PurchaseOrderDetail extends Model
         return $this->belongsTo(PurchaseOrder::class);
     }
 
-    public function RequirementSummary(){
-        return $this->belongsTo(RequirementSummary::class);
-    }
-
     public function WarehouseInputs(){
         return $this->hasMany(WarehouseInput::class);
     }

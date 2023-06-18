@@ -19,7 +19,11 @@ class WarehouseDetail extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function WarehouseDepartments(){
-        return $this->hasMany(WarehouseDepartment::class);
+    public function WarehouseInputs(){
+        return $this->hasMany(WarehouseInput::class);
+    }
+
+    public function WarehouseOutputs(){
+        return $this->hasMany(WarehouseOutput::class);
     }
 }

@@ -26,7 +26,7 @@ class ProductTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
-        //$this->setSearchLazy();
+        $this->setSearchLazy();
         $this->setBulkActions([
             'delete' => 'Eliminar',
             'export' => 'Exportar',
@@ -40,7 +40,6 @@ class ProductTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
             Column::make("Descripción", "description")
-                ->sortable()
                 ->collapseOnTablet(),
             Column::make("Categoria", "category.name")
                 ->sortable()
