@@ -9,6 +9,8 @@ class Requirement extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id','product_id','quantity'];
+
     public function User(){
         return $this->belongsTo(User::class);
     }

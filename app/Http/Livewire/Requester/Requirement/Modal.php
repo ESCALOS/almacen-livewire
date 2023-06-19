@@ -2,6 +2,10 @@
 
 namespace App\Http\Livewire\Requester\Requirement;
 
+use App\Models\Requirement;
+use App\Models\WarehouseDetail;
+use App\Models\WarehouseInput;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\DB;
@@ -12,10 +16,12 @@ class Modal extends Component
 
     public $open = false;
     public $products = [
-        'id' => '',
-        'quantity' => ''
+        [
+            'id' => '',
+            'quantity' => ''
+        ]
     ];
-    protected $listeners = ['openModal'];
+    protected $listeners = ['openModal','getProducts'];
 
     public function rules(){
         return [
@@ -36,6 +42,10 @@ class Modal extends Component
         $this->open = true;
     }
 
+    public function getProducts($products){
+        $this->products = $products;
+    }
+
     public function addProduct(){
         $this->products[] = [
             'id' => '',
@@ -46,6 +56,22 @@ class Modal extends Component
     public function removeProduct($index){
         unset($this->products[$index]);
         $this->products = array_values($this->products);
+    }
+
+    public function save(){
+        $this->validate();
+        DB::transaction(function(){
+            foreach ($this->products as $product) {
+                Requirement::create([
+                    'user_id' => Auth::user()->id,
+                    'product_id' => $product['id'],
+                    'quantity' => $product['quantity']
+                ]);
+            }
+        });
+        $this->emit('refreshDatatable');
+        $this->alert('success','Productos Solicitados');
+        $this->reset('open','products');
     }
 
     public function render()
