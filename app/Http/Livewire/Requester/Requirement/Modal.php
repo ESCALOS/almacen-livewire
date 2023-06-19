@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Requester\Requirement;
 
 use App\Models\Requirement;
-use App\Models\WarehouseDetail;
-use App\Models\WarehouseInput;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -44,6 +42,7 @@ class Modal extends Component
 
     public function getProducts($products){
         $this->products = $products;
+        $this->open = true;
     }
 
     public function addProduct(){

@@ -26,6 +26,7 @@ class ProductTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setAdditionalSelects(['products.id']);
         $this->setSearchLazy();
         $this->setBulkActions([
             'delete' => 'Eliminar',
@@ -95,7 +96,7 @@ class ProductTable extends DataTableComponent
     }
 
     public function delete(){
-       $eliminados = 0;
+        $eliminados = 0;
         foreach ($this->getSelected() as $item) {
             try{
                 Product::find($item)->delete();
@@ -108,6 +109,13 @@ class ProductTable extends DataTableComponent
         if($eliminados>0){
             $this->clearSelected();
             $this->alert('success', '!Se eliminó '.$eliminados.' productos!', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+        }else{
+            $this->refreshDatatable();
+            $this->alert('error', '!No se eliminó nada!', [
                 'position' => 'top-right',
                 'timer' => 2000,
                 'toast' => true,

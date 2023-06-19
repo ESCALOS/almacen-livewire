@@ -9,7 +9,7 @@ class Requirement extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','product_id','quantity'];
+    protected $fillable = ['user_id','product_id','quantity','met'];
 
     public function User(){
         return $this->belongsTo(User::class);
