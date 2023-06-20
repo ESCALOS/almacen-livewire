@@ -6,12 +6,15 @@ use Livewire\Component;
 
 class Base extends Component
 {
+    public $model = "Product";
+    public $columns = ['Producto','Descripcion','Categoria','Unidad de Medida','Abreviacion'];
+
     public function openModal(){
         $this->emitTo('logistic.product.modal','openModal',0);
     }
 
     public function openImportModal(){
-        $this->emitTo('logistic.product.import-modal','openImportModal');
+        $this->emitTo('import-modal','openImportModal');
     }
 
     public function render()

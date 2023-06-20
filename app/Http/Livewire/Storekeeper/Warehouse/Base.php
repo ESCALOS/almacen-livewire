@@ -23,6 +23,10 @@ class Base extends Component
         $this->emitTo('storekeeper.warehouse.modal','openModal',0);
     }
 
+    public function openImportModal(){
+        $this->emmtTo('storekeeper.warehouse.importModal','openImportModal');
+    }
+
     public function render()
     {
         return view('livewire.storekeeper.warehouse.base');

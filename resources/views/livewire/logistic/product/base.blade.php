@@ -4,7 +4,7 @@
         <livewire:logistic.product.product-table>
     </div>
     <livewire:logistic.product.modal>
-    <livewire:logistic.product.import-modal>
+    <livewire:import-modal :model="$model" :columns="$columns">
     <livewire:logistic.category.modal>
     <livewire:logistic.measurement-unit.modal>
 </div>

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Logistic\Product;
+namespace App\Http\Livewire;
 
 use App\Exceptions\ImportErrorException;
 use App\Exports\FormatExport;
 use App\Imports\ProductImport;
+use App\Imports\WarehouseInputImport;
 use Illuminate\Support\Facades\Response;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,9 +17,12 @@ class ImportModal extends Component
     use WithFileUploads;
     use LivewireAlert;
 
-    public $openImport;
+    public $model;
+    public $columns = [];
+    public $openImport = false;
     public $archivo;
     public $fileNumber;
+    public $dependentId;
 
     protected $listeners = ['openImportModal'];
 
@@ -28,22 +32,36 @@ class ImportModal extends Component
         ];
     }
 
-    public function mount(){
-        $this->openImport = false;
-    }
-
-    public function openImportModal(){
+    public function openImportModal($id=0){
         $this->fileNumber++;
         $this->archivo = null;
         $this->openImport = true;
+        $this->dependentId = $id;
     }
 
     public function import(){
         $this->validate();
         try {
-            Excel::import(new ProductImport,$this->archivo);
+            switch ($this->model) {
+                case 'Product':
+                    $model = new ProductImport;
+                    break;
+
+                case 'WarehouseInput':
+                    $model = new WarehouseInputImport($this->dependentId);
+                    break;
+
+                default:
+                    $this->alert('error','¡Error del sistema!',[
+                        'position' => 'center',
+                        'timer' => 2000,
+                        'toast' => false
+                    ]);
+                    return;
+            }
+            Excel::import($model,$this->archivo);
             $this->emit('refreshDatatable');
-            $this->alert('success','¡Productos importados!',[
+            $this->alert('success','¡Importación exitosa!',[
                 'position' => 'center',
                 'timer' => 2000,
                 'toast' => false
@@ -72,16 +90,15 @@ class ImportModal extends Component
     }
 
     public function exportFormat(){
-        $columns = ['Producto','Descripcion','Categoria','Unidad de Medida','Abreviacion'];
-        $export = new FormatExport($columns);
+        $export = new FormatExport($this->columns);
         return Response::streamDownload(function () use ($export) {
             Excel::store($export, 'temp.xlsx');
             readfile(storage_path('app/temp.xlsx'));
-        }, 'Formato de Productos.xlsx');
+        }, 'Formato.xlsx');
     }
 
     public function render()
     {
-        return view('livewire.logistic.product.import-modal');
+        return view('livewire.import-modal');
     }
 }

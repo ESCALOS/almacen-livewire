@@ -210,5 +210,6 @@
     "Description": "Descripción",
     "Measurement Unit": "Unidad de Medida",
     "Category": "Categoría",
-    "Warehouse": "Almacén"
+    "Warehouse": "Almacén",
+    "Warehouses": "Almacenes"
 }

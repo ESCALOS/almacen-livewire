@@ -1,4 +1,4 @@
-<x-modal.card title="Importar Productos" blur wire:model.defer="openImport">
+<x-modal.card title="Importar" blur wire:model.defer="openImport">
     <x-input label="Archivo" placeholder="Ingrese el archivo" type="file" wire:model.defer="archivo"/>
     <x-slot name="footer">
         <div class="flex justify-between gap-x-4">

@@ -63,8 +63,8 @@ class RequirementTable extends DataTableComponent
     }
 
     public function delete(){
-        $eliminados = 0;
         DB::transaction(function () {
+            $eliminados = 0;
             foreach ($this->getSelected() as $item) {
                 try{
                     $requirement = Requirement::find($item);
@@ -77,21 +77,21 @@ class RequirementTable extends DataTableComponent
                     return;
                 }
             }
+            if($eliminados>0){
+                $this->clearSelected();
+                $this->alert('success', '!Se eliminó '.$eliminados.' requerimientos!', [
+                    'position' => 'top-right',
+                    'timer' => 2000,
+                    'toast' => true,
+                ]);
+            }else{
+                $this->emit('refreshDatatable');
+                $this->alert('error', '!No se eliminó nada!', [
+                    'position' => 'top-right',
+                    'timer' => 2000,
+                    'toast' => true,
+                ]);
+            }
         });
-        if($eliminados>0){
-            $this->clearSelected();
-            $this->alert('success', '!Se eliminó '.$eliminados.' requerimientos!', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-        }else{
-            $this->emit('refreshDatatable');
-            $this->alert('error', '!No se eliminó nada!', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-        }
     }
 }

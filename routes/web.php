@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\MeasurementUnitController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\WarehouseController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,5 @@ Route::middleware([
     Route::get('api/category',[CategoryController::class,'__invoke'])->name('api.category');
     Route::get('api/department',[DepartmentController::class,'__invoke'])->name('api.deparment');
     Route::get('api/product',[ProductController::class,'__invoke'])->name('api.product');
+    Route::get('api/warehouse',[WarehouseController::class,'__invoke'])->name('api.warehouse');
 });

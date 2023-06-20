@@ -19,6 +19,9 @@
                     <x-nav-link href="{{ route('logistic.requirements') }}" :active="request()->routeIs('logistic.requirements')">
                         {{ __('Requirements') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('logistic.warehouses') }}" :active="request()->routeIs('logistic.warehouses')">
+                        {{ __('Warehouses') }}
+                    </x-nav-link>
                 @endrole
                 @role('ALMACEN')
                     <x-nav-link href="{{ route('storekeeper.warehouse') }}" :active="request()->routeIs('storekeeper.warehouse')">
