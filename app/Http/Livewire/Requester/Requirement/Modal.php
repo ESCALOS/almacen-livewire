@@ -61,11 +61,16 @@ class Modal extends Component
         $this->validate();
         DB::transaction(function(){
             foreach ($this->products as $product) {
-                Requirement::create([
-                    'user_id' => Auth::user()->id,
-                    'product_id' => $product['id'],
-                    'quantity' => $product['quantity']
-                ]);
+                Requirement::updateOrCreate(
+                    [
+                        'user_id' => Auth::user()->id,
+                        'product_id' => $product['id'],
+                        'met' => false
+                    ],
+                    [
+                        'quantity' => $product['quantity']
+                    ]
+                );
             }
         });
         $this->emit('refreshDatatable');
