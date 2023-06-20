@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Support\Facades\DB;
 
 class RequirementTable extends DataTableComponent
 {
@@ -46,29 +47,37 @@ class RequirementTable extends DataTableComponent
     public function edit(): void
     {
         $products = null;
-        foreach($this->getSelected() as $key => $value){
+        $i = 0;
+        foreach($this->getSelected() as $value){
             $requirement = Requirement::find($value);
             if(!$requirement->met){
-                $products[$key] = ['id' => $requirement->product_id, 'quantity' => $requirement->quantity];
+                $products[$i] = ['id' => $requirement->product_id, 'quantity' => $requirement->quantity];
+                $i++;
             }
         }
-        $this->emit('getProducts',$products);
+        if($products == null){
+            $this->alert('warning','No se pueden editar los ya atendidos');
+        }else{
+            $this->emit('getProducts',$products);
+        }
     }
 
     public function delete(){
         $eliminados = 0;
-        foreach ($this->getSelected() as $item) {
-            try{
-                $requirement = Requirement::find($item);
-                if(!$requirement->met){
-                   $requirement->delete();
-                   $eliminados++;
+        DB::transaction(function () {
+            foreach ($this->getSelected() as $item) {
+                try{
+                    $requirement = Requirement::find($item);
+                    if(!$requirement->met){
+                       $requirement->delete();
+                       $eliminados++;
+                    }
+                }catch(\PDOException $e){
+                    $this->alert('error', $e->getMessage());
+                    return;
                 }
-            }catch(\PDOException $e){
-                $this->alert('error', $e->getMessage());
-                return;
             }
-        }
+        });
         if($eliminados>0){
             $this->clearSelected();
             $this->alert('success', '!Se eliminó '.$eliminados.' requerimientos!', [
@@ -77,7 +86,7 @@ class RequirementTable extends DataTableComponent
                 'toast' => true,
             ]);
         }else{
-            $this->refreshDatatable();
+            $this->emit('refreshDatatable');
             $this->alert('error', '!No se eliminó nada!', [
                 'position' => 'top-right',
                 'timer' => 2000,
