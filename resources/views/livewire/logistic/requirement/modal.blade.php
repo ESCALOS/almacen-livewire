@@ -1,7 +1,17 @@
 <x-modal.card title="Ingresar Productos" blur wire:model.defer="open">
-    <div class="grid grid-cols-12 gap-4 px-4">
+    <div class="grid grid-cols-2 gap-4 px-4 pb-4">
+        <x-input type="number" label="RUC" max="20999999999"/>
+        <x-input type="text" label="Proveedor"/>
+        <x-input type="text" label="Dirección"/>
+        <div class="grid grid-cols-2 gap-4" style="justify-items: center; align-content:center">
+            <x-radio lg left-label="CONTADO" wire:model='paymentMethod' value="1" id="paymentMethod"/>
+            <x-radio lg left-label="CRÉDITO" wire:model='paymentMethod' value="0" id="paymentMethod"/>
+        </div>
+    </div>
+    <hr>
+    <div class="grid grid-cols-12 gap-4 p-4">
         @foreach ($products as $index => $product)
-        <div class="grid grid-cols-3 col-span-10 gap-4 sm:col-span-11">
+        <div class="grid grid-cols-4 col-span-10 gap-4 sm:col-span-11">
             <div class="col-span-2">
                 <x-select
                     label="Producto"
@@ -13,6 +23,7 @@
                 />
             </div>
             <x-input type="number" label="Cantidad" wire:model.defer="products.{{ $index }}.quantity"/>
+            <x-input type="number" label="Precio" wire:model.defer="products.{{ $index }}.price"/>
         </div>
         <div class="col-span-2 mt-6 sm:col-span-1">
             <x-button.circle negative icon="trash" wire:click='removeProduct({{ $index }})'/>

@@ -6,9 +6,11 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Requirement;
 use Illuminate\Database\Eloquent\Builder;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class RequirementTable extends DataTableComponent
 {
+    use LivewireAlert;
     public function configure(): void
     {
         $this->setPrimaryKey('id');
@@ -46,19 +48,34 @@ class RequirementTable extends DataTableComponent
 
     public function openModal(): void
     {
-        $products = null;
+        $products = [];
         $i = 0;
-        foreach($this->getSelected() as $value){
-            $requirement = Requirement::find($value);
+        foreach($this->getSelected() as $id){
+            $requirement = Requirement::find($id);
             if(!$requirement->met){
-                $products[$i] = ['id' => $requirement->product_id, 'quantity' => $requirement->quantity];
-                $i++;
+                $index = $this->validateProduct($products,$requirement->product_id);
+                if($index == -1){
+                    $products[$i] = ['id' => $requirement->product_id, 'quantity' => $requirement->quantity, 'price' => ''];
+                    $i++;
+                }else{
+                    $products[$index]['quantity'] = $products[$index]['quantity'] + $requirement->quantity;
+                }
+
             }
         }
-        if($products == null){
+        if($products == []){
             $this->alert('warning','Requiremientos ya atendidos');
         }else{
             $this->emit('getProducts',$products);
         }
+    }
+
+    private function validateProduct($products,$id): int{
+        foreach($products as $index => $product){
+            if($product['id'] == $id){
+                return $index;
+            }
+        }
+        return -1;
     }
 }
