@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('supplier_id')->constrained();
-            $table->foreignId('currency_id')->constrained();
             $table->boolean('credit')->default(false);
             $table->boolean('liquidated')->default(false);
             $table->decimal('amount',10,2,true);
-            $table->decimal('liquidated_amount',10,2,true);
+            $table->decimal('liquidated_amount',10,2,true)->default(0);
             $table->timestamps();
         });
     }
