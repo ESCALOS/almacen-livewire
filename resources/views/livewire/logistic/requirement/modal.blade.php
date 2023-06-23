@@ -4,8 +4,8 @@
         <x-input type="text" label="Proveedor" value="{{ $supplierName }}"/>
         <x-input type="text" label="Dirección" value="{{ $supplierAddress }}"/>
         <div class="grid grid-cols-2 gap-4" style="justify-items: center; align-content:center">
-            <x-radio lg left-label="CONTADO" wire:model='paymentMethod' value="1" id="paymentMethod"/>
-            <x-radio lg left-label="CRÉDITO" wire:model='paymentMethod' value="0" id="paymentMethod"/>
+            <x-radio lg left-label="CONTADO" wire:model='paymentMethod' value="0" id="paymentMethod"/>
+            <x-radio lg left-label="CRÉDITO" wire:model='paymentMethod' value="1" id="paymentMethod"/>
         </div>
     </div>
     <hr>

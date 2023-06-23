@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire\Logistic\Requirement;
 
+use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderDetail;
 use App\Models\Supplier;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -14,7 +17,8 @@ class Modal extends Component
     public $supplierRuc = '';
     public $supplierName = '';
     public $supplierAddress = '';
-    public $paymentMethod = '1';
+    public $paymentMethod = '0';
+    public $requeriments = [];
     public $products = [
         [
             'id' => '',
@@ -27,6 +31,8 @@ class Modal extends Component
 
     public function rules(){
         return [
+            'supplierRuc' => 'required|size:11|exists:suppliers,ruc|regex:/^[0-9]+$/',
+            'supplierName' => 'required',
             'products.*.id' => 'required',
             'products.*.quantity' => 'required|numeric',
             'products.*.price' => 'required|numeric',
@@ -35,6 +41,11 @@ class Modal extends Component
 
     public function messages(){
         return [
+            'supplierRuc.required' => 'El ruc es obligatorio',
+            'supplierName.required' => 'El proveedor es obligatorio',
+            'supplierRuc.size' => 'El ruc debe tener 11 digitos',
+            'supplierRuc.exists' => 'El proveedor no existe',
+            'supplierRuc.regex' => 'El ruc debe tener numeros solamente',
             'products.*.id' => 'El producto es requerido',
             'products.*.quantity' => 'La cantidad es requerida',
             'products.*.price' => 'El precio es requerido',
@@ -46,7 +57,8 @@ class Modal extends Component
         $this->open = true;
     }
 
-    public function getProducts($products){
+    public function getProducts($products,$requeriments){
+        $this->requeriments = $requeriments;
         $this->products = $products;
         $this->open = true;
     }
@@ -64,45 +76,71 @@ class Modal extends Component
         $this->products = array_values($this->products);
     }
 
+    public function save(){
+        $this->validate();
+        DB::transaction(function () {
+            $purcharseOrder = PurchaseOrder::create([
+                'supplier_id' => Supplier::where('ruc',$this->supplierRuc)->first()->id,
+                'credit' => $this->paymentMethod,
+                'amount' => array_reduce($this->products, fn ($total,$product) =>  $total + $product['price'],0)
+            ]);
+            foreach($this->products as $product){
+                PurchaseOrderDetail::create([
+                    'purchase_order_id' => $purcharseOrder->id,
+                    'product_id' => $product['id'],
+                    'quantity' => $product['quantity'],
+                    'price' => $product['price'],
+                ]);
+            }
+            DB::table('requirements')
+                ->whereIn('id', $this->requeriments)
+                ->update(['met'=>true]);
+            $this->resetExcept();
+            $this->emit('refreshDatatable');
+            $this->alert('success', 'Guardado con éxito');
+        });
+    }
+
     //Buscar Proveedor
     public function updatedSupplierRuc (){
-        if(strlen($this->supplierRuc) != 11){
-            $this->alert('warning', 'Ruc o Dni incorrecto', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-            $this->reset('supplierName','supplierAddress');
-            return false;
-        }
-        if(Supplier::where('ruc',$this->supplierRuc)->exists()){
-            $empresa = Supplier::where('ruc',$this->supplierRuc)->first();
-            $this->supplierName = $empresa->name;
-            $this->supplierAddress = $empresa->address;
-            $this->alert('success', 'Proveedor Encontrado', [
-                'position' => 'top-right',
-                'timer' => 2000,
-                'toast' => true,
-            ]);
-        }else{
-            $empresa = $this->getEntityApi($this->supplierRuc);
-            if(isset($empresa->numeroDocumento)){
-                $this->supplierName = $empresa->nombre;
-                $this->supplierAddress = $empresa->direccion;
+        if(strlen($this->supplierRuc) == 11 && is_numeric($this->supplierRuc)){
+            if(Supplier::where('ruc',$this->supplierRuc)->exists()){
+                $empresa = Supplier::where('ruc',$this->supplierRuc)->first();
+                $this->supplierName = $empresa->name;
+                $this->supplierAddress = $empresa->address;
                 $this->alert('success', 'Proveedor Encontrado', [
                     'position' => 'top-right',
                     'timer' => 2000,
                     'toast' => true,
                 ]);
             }else{
-                $this->reset('supplierName','supplierAddress');
-                $this->alert('error', 'El Cliente no existe', [
-                    'position' => 'top-right',
-                    'timer' => 2000,
-                    'toast' => true,
-                ]);
+                $empresa = $this->getEntityApi($this->supplierRuc);
+                if(isset($empresa->numeroDocumento)){
+                    $this->supplierName = $empresa->nombre;
+                    $this->supplierAddress = $empresa->direccion;
+                    $this->alert('success', 'Proveedor Encontrado', [
+                        'position' => 'top-right',
+                        'timer' => 2000,
+                        'toast' => true,
+                    ]);
+                }else{
+                    $this->reset('supplierName','supplierAddress');
+                    $this->alert('error', 'El Cliente no existe', [
+                        'position' => 'top-right',
+                        'timer' => 2000,
+                        'toast' => true,
+                    ]);
+                }
             }
+        }else{
+            $this->alert('warning', 'Ruc o Dni incorrecto', [
+                'position' => 'top-right',
+                'timer' => 2000,
+                'toast' => true,
+            ]);
+            $this->reset('supplierName','supplierAddress');
         }
+
     }
 
     public function getEntityApi($numero){

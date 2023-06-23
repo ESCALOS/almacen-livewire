@@ -9,6 +9,8 @@ class PurchaseOrderDetail extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function PurchaseOrder(){
         return $this->belongsTo(PurchaseOrder::class);
     }

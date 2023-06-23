@@ -49,11 +49,13 @@ class RequirementTable extends DataTableComponent
     public function openModal(): void
     {
         $products = [];
+        $requirements = [];
         $i = 0;
         foreach($this->getSelected() as $id){
             $requirement = Requirement::find($id);
             if(!$requirement->met){
                 $index = $this->validateProduct($products,$requirement->product_id);
+                $requirements[] = $id;
                 if($index == -1){
                     $products[$i] = ['id' => $requirement->product_id, 'quantity' => $requirement->quantity, 'price' => ''];
                     $i++;
@@ -66,7 +68,7 @@ class RequirementTable extends DataTableComponent
         if($products == []){
             $this->alert('warning','Requiremientos ya atendidos');
         }else{
-            $this->emit('getProducts',$products);
+            $this->emit('getProducts',$products,$requirements);
         }
     }
 
