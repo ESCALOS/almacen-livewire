@@ -11,6 +11,8 @@ class PurchaseOrderTable extends DataTableComponent
 {
     protected $model = PurchaseOrder::class;
 
+
+
     public function configure(): void
     {
         $this->setPrimaryKey('id');
@@ -24,9 +26,15 @@ class PurchaseOrderTable extends DataTableComponent
             Column::make("Proveedor", "supplier.name")
                 ->sortable(),
             Column::make("Método de Pago", "credit")
-                ->sortable(),
+                ->format(fn ($value) => $value ? 'CRÉDITO' : 'CONTADO'),
             BooleanColumn::make("¿Está cancelado?", "liquidated"),
-            Column::make('Fecha','created_at')
+            Column::make('Fecha','created_at'),
+            Column::make('Detalle', 'id')
+                ->format(fn ($value) => view('components.table-button', ['id' => $value,'icon' => 'information']))
         ];
+    }
+
+    public function action($id){
+        $this->emitTo('logistic.purchase-order.modal','openModal',$id);
     }
 }

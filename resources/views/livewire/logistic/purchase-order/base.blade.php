@@ -3,4 +3,5 @@
     <div class="p-4">
         <livewire:logistic.purchase-order.purchase-order-table>
     </div>
+<livewire:logistic.purchase-order.modal>
 </div>

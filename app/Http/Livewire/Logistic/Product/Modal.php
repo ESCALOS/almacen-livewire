@@ -38,7 +38,7 @@ class Modal extends Component
 
     public function openModal($id) {
         $this->productId = $id;
-        if($id > 0){
+        if($id){
             $product = Product::find($id);
             $this->name = $product->name;
             $this->description = $product->description;
@@ -60,10 +60,10 @@ class Modal extends Component
 
     public function save(){
         $this->validate();
-        if($this->productId == 0){
-            $product = new Product();
-        }else{
+        if($this->productId){
             $product = Product::find($this->productId);
+        }else{
+            $product = new Product();
         }
 
         $product->name = strtoupper($this->name);

@@ -11,6 +11,10 @@ class PurchaseOrderDetail extends Model
 
     protected $guarded = [];
 
+    public function Product(){
+        return $this->belongsTo(Product::class);
+    }
+
     public function PurchaseOrder(){
         return $this->belongsTo(PurchaseOrder::class);
     }

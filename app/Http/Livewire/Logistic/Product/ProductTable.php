@@ -11,7 +11,6 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Product;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ComponentColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 
 class ProductTable extends DataTableComponent
@@ -48,12 +47,12 @@ class ProductTable extends DataTableComponent
             Column::make("Unidad de Medida", "measurementunit.name")
                 ->sortable()
                 ->collapseOnTablet(),
-            ComponentColumn::make('Acciones', 'id')
-                ->component('edit'),
+            Column::make('Editar', 'id')
+                ->format(fn ($value) => view('components.table-button', ['id' => $value,'icon' => 'pencil']))
         ];
     }
 
-    public function edit($id){
+    public function action($id){
         $this->emitTo('logistic.product.modal','openModal',$id);
     }
 

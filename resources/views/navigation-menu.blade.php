@@ -112,8 +112,10 @@
                                 </span>
                             @endif
                         </x-slot>
-
                         <x-dropdown.item icon="user-circle" label="{{ __('Profile') }}"  href="{{ route('profile.show') }}"/>
+                        @if (Auth::user()->is_admin)
+                        <x-dropdown.item icon="cog" label="{{ __('Settings') }}"  href="/admin"/>
+                        @endif
                         <x-dropdown.item icon="logout" separator>
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
@@ -189,6 +191,11 @@
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                @if (Auth::user()->is_admin)
+                <x-responsive-nav-link href="/admin">
+                    {{ __('Settings') }}
+                </x-responsive-nav-link>
+                @endif
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
