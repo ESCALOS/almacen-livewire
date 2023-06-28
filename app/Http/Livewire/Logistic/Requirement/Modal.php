@@ -96,7 +96,7 @@ class Modal extends Component
                 ->whereIn('id', $this->requeriments)
                 ->update(['met'=>true]);
             $this->resetExcept();
-            $this->emit('refreshDatatable');
+            $this->emit('clearSelected');
             $this->alert('success', 'Guardado con éxito');
         });
     }
@@ -177,6 +177,12 @@ class Modal extends Component
 
         // Datos de empresas según padron reducido
         return $empresa;
+    }
+
+    public function updatedOpen(){
+        if(!$this->open){
+            $this->resetExcept('open');
+        }
     }
 
     public function render()

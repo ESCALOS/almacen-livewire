@@ -19,6 +19,9 @@
                     <x-nav-link href="{{ route('logistic.requirements') }}" :active="request()->routeIs('logistic.requirements')">
                         {{ __('Requirements') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('logistic.purchase-orders') }}" :active="request()->routeIs('logistic.purchase-orders')">
+                        {{ __('Purchase Orders') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ route('logistic.warehouses') }}" :active="request()->routeIs('logistic.warehouses')">
                         {{ __('Warehouses') }}
                     </x-nav-link>
@@ -140,12 +143,30 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            @role('LOGISTICA')
             <x-responsive-nav-link href="{{ route('logistic.products') }}" :active="request()->routeIs('logistic.products')">
                 {{ __('Products') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('logistic.requirements') }}" :active="request()->routeIs('logistic.requirements')">
                 {{ __('Requirements') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('logistic.purchase-orders') }}" :active="request()->routeIs('logistic.purchase-orders')">
+                {{ __('Purchase Orders') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('logistic.warehouses') }}" :active="request()->routeIs('logistic.warehouses')">
+                {{ __('Warehouses') }}
+            </x-responsive-nav-link>
+            @endrole
+            @role('ALMACEN')
+            <x-responsive-nav-link href="{{ route('storekeeper.warehouse') }}" :active="request()->routeIs('storekeeper.warehouse')">
+                {{ __('Warehouse') }}
+            </x-responsive-nav-link>
+            @endrole
+            @role('SOLICITANTE')
+            <x-responsive-nav-link href="{{ route('requester.requirements') }}" :active="request()->routeIs('requester.requirements')">
+                {{ __('Requiremenents') }}
+            </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

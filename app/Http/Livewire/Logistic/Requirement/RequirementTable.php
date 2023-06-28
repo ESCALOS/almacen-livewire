@@ -11,6 +11,12 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 class RequirementTable extends DataTableComponent
 {
     use LivewireAlert;
+
+    protected $listeners = [
+        'refreshDatatable' => '$refresh',
+        'clearSelected' => 'clearSelected',
+    ];
+
     public function configure(): void
     {
         $this->setPrimaryKey('id');

@@ -7,7 +7,9 @@
             @if ($import)
             <x-button rounded cyan label="Importar" icon="upload" wire:click='openImportModal'/>
             @endif
+            @if($button)
             <x-button rounded positive label="{{ $label }}" icon="plus" wire:click="{{ $action }}"/>
+            @endif
         </div>
     </div>
     <hr>

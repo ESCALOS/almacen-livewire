@@ -11,12 +11,14 @@ class HeaderCrud extends Component
 
     public $label;
     public $action;
+    public $button;
     public $import;
 
-    public function __construct($label='Registrar',$action='openModal',$import=false)
+    public function __construct($label='Registrar',$action='openModal',$button=true,$import=false)
     {
         $this->label = $label;
         $this->action = $action;
+        $this->button = $button;
         $this->import = $import;
     }
 
