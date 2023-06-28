@@ -1,20 +1,29 @@
 <?php
 
-namespace App\Http\Livewire\Logistic\PurchaseOrder;
+namespace App\Http\Livewire\Treasurer\UncancelledOrder;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\PurchaseOrder;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
+use Illuminate\Database\Eloquent\Builder;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class PurchaseOrderTable extends DataTableComponent
 {
-    protected $model = PurchaseOrder::class;
+    use LivewireAlert;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
         $this->setSearchLazy();
+    }
+
+    public function builder(): Builder
+    {
+        return PurchaseOrder::query()
+            ->where('purchase_orders.liquidated',false)
+            ->orderBy('purchase_orders.updated_at', 'DESC');
     }
 
     public function columns(): array
@@ -26,18 +35,9 @@ class PurchaseOrderTable extends DataTableComponent
                 ->searchable()
                 ->sortable(),
             Column::make("Método de Pago", "credit")
-                ->searchable()
                 ->format(fn ($value) => $value ? 'CRÉDITO' : 'CONTADO'),
-            BooleanColumn::make("¿Cancelado?", "liquidated"),
-            Column::make("Monto", "amount")
-                ->format(fn ($value) => 'S/.'.$value),
+            BooleanColumn::make("¿Está cancelado?", "liquidated"),
             Column::make('Fecha','created_at'),
-            Column::make('Detalle', 'id')
-                ->format(fn ($value) => view('components.table-button', ['id' => $value,'icon' => 'information']))
         ];
-    }
-
-    public function action($id){
-        $this->emitTo('logistic.purchase-order.modal','openModal',$id);
     }
 }

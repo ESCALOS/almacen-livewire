@@ -36,6 +36,11 @@
                         {{ __('Requirements') }}
                     </x-nav-link>
                 @endrole
+                @role('TESORERO')
+                    <x-nav-link href="{{ route('treasurer.purchase-orders') }}" :active="request()->routeIs('treasurer.purchase-orders')">
+                        {{ __('Purchase Orders') }}
+                    </x-nav-link>
+                @endrole
                 </div>
             </div>
 
@@ -167,6 +172,11 @@
             @role('SOLICITANTE')
             <x-responsive-nav-link href="{{ route('requester.requirements') }}" :active="request()->routeIs('requester.requirements')">
                 {{ __('Requiremenents') }}
+            </x-responsive-nav-link>
+            @endrole
+            @role('TESORERO')
+            <x-responsive-nav-link href="{{ route('treasurer.purchase-orders') }}" :active="request()->routeIs('treasurer.purchase-orders')">
+                {{ __('Purchase Orders') }}
             </x-responsive-nav-link>
             @endrole
         </div>

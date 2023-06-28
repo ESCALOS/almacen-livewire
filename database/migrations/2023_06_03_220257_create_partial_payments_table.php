@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('purchase_order_id')->constrained();
             $table->decimal('amount',10,2,true);
-            $table->date('date');
             $table->timestamps();
         });
     }
