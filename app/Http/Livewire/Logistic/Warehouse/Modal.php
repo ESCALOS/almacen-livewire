@@ -73,10 +73,10 @@ class Modal extends Component
                 $warehouseInput->quantity = $product['quantity'];
                 $warehouseInput->price = $product['price'];
                 $warehouseInput->save();
-
-                $warehouseDetail->quantity = $warehouseDetail->quantity + $product['quantity'];
+                //Comentado porque el trigger implementado ya hace esta función
+                /*$warehouseDetail->quantity = $warehouseDetail->quantity + $product['quantity'];
                 $warehouseDetail->price = $warehouseDetail->price + $product['price'];
-                $warehouseDetail->save();
+                $warehouseDetail->save();*/
             }
         });
         $this->emit('refreshDatatable');

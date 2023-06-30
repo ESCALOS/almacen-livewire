@@ -58,9 +58,10 @@ class WarehouseInputImport implements OnEachRow
                 $warehouseInput->price = $row[6];
                 $warehouseInput->save();
 
-                $warehouseDetail->quantity = $warehouseDetail->quantity + $row[5];
+                //Comentado porque el trigger implementado ya hace esta función
+                /*$warehouseDetail->quantity = $warehouseDetail->quantity + $row[5];
                 $warehouseDetail->price = $warehouseDetail->price + $row[6];
-                $warehouseDetail->save();
+                $warehouseDetail->save();*/
             });
         }
     }
