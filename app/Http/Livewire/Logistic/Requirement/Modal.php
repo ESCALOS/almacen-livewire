@@ -53,7 +53,7 @@ class Modal extends Component
     }
 
     public function openModal(){
-        $this->reset('products');
+        $this->resetExcept('open');
         $this->open = true;
     }
 

@@ -10,10 +10,10 @@ class Modal extends Component
 {
     use LivewireAlert;
 
-    public $open;
-    public $categoryId;
-    public $name;
-    public $description;
+    public $open = false;
+    public $categoryId = 0;
+    public $name = "";
+    public $description = "";
 
     protected $listeners = ['openModal'];
 
@@ -30,15 +30,15 @@ class Modal extends Component
         ];
     }
 
-    public function mount(){
-        $this->open = false;
-        $this->categoryId = 0;
-    }
-
     public function openModal($id){
-        $this->name = "";
-        $this->description = "";
         $this->categoryId = $id;
+        if($id){
+            $category = Category::find($id);
+            $this->name = $category->name;
+            $this->description = $category->description;
+        }else{
+            $this->resetExcept('open','categoryId');
+        }
         $this->open = true;
     }
 

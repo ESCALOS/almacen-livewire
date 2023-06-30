@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\MeasurementUnitController;
 use App\Http\Controllers\Api\DepartmentController;
+use App\Http\Controllers\Api\IncompletedPurchaseOrdersController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\WarehouseController;
 use App\Http\Controllers\HomeController;
@@ -32,4 +33,5 @@ Route::middleware([
     Route::get('api/department',[DepartmentController::class,'__invoke'])->name('api.deparment');
     Route::get('api/product',[ProductController::class,'__invoke'])->name('api.product');
     Route::get('api/warehouse',[WarehouseController::class,'__invoke'])->name('api.warehouse');
+    Route::get('api/incompleted-purchase-orders',[IncompletedPurchaseOrdersController::class,'__invoke'])->name('api.incompleted-purchase-orders');
 });

@@ -24,6 +24,7 @@ class AmortizeModal extends Component
         $this->purchaseOrderId = $id;
         $purchaseOrder = PurchaseOrder::find($id);
         $this->missingAmount = number_format($purchaseOrder->amount - $purchaseOrder->liquidated_amount,2);
+        $this->amount = $this->missingAmount;
         $this->open = true;
     }
 

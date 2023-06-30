@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('liquidated')->default(false);
             $table->decimal('amount',10,2,true);
             $table->decimal('liquidated_amount',10,2,true)->default(0);
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }

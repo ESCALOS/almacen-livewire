@@ -19,12 +19,8 @@ class Base extends Component
         }
     }
 
-    public function openModal(){
+    public function openModalInput(){
         $this->emitTo('storekeeper.warehouse.modal','openModal',0);
-    }
-
-    public function openImportModal(){
-        $this->emmtTo('storekeeper.warehouse.importModal','openImportModal');
     }
 
     public function render()

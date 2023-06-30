@@ -10,10 +10,10 @@ class Modal extends Component
 {
     use LivewireAlert;
 
-    public $open;
-    public $measurementUnitId;
-    public $name;
-    public $abbreviation;
+    public $open = false;
+    public $measurementUnitId = 0;
+    public $name = "";
+    public $abbreviation = "";
 
     protected $listeners = ['openModal'];
 
@@ -33,18 +33,22 @@ class Modal extends Component
         ];
     }
 
-    public function mount(){
-        $this->open = false;
-        $this->measurementUnitId = 0;
-        $this->name = "";
-        $this->abbreviation = "";
+    public function openModal($id){
+        $this->measurementUnitId = $id;
+        if($id){
+            $measurementUnit = MeasurementUnit::find($id);
+            $this->name = $measurementUnit->name;
+            $this->abbreviation = $measurementUnit->abbreviation;
+        }else{
+            $this->resetExcept('open','measurementUnitId');
+        }
+        $this->open = true;
     }
 
-    public function openModal($id){
-        $this->name = "";
-        $this->abbreviation = "";
-        $this->measurementUnitId = $id;
-        $this->open = true;
+    public function updatedOpen(){
+        if(!$this->open){
+            $this->resetExcept('open');
+        }
     }
 
     public function save(){

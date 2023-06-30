@@ -4,35 +4,38 @@ namespace App\Http\Livewire\Storekeeper\Warehouse;
 
 use App\Models\Category;
 use App\Models\MeasurementUnit;
+use App\Models\WarehouseDetail;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\WarehouseDetail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
 class WarehouseDetailTable extends DataTableComponent
 {
     use LivewireAlert;
 
-    protected $model = WarehouseDetail::class;
+    public $warehouseId;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
         $this->setSearchLazy();
-        $this->setSearchVisibilityStatus(true);
+        $this->setAdditionalSelects(['warehouse_details.id']);
         $this->setBulkActions([
             'dispatch' => 'Despachar',
         ]);
     }
 
+    public function builder(): Builder
+    {
+        return WarehouseDetail::query()
+            ->where('warehouse_id',$this->warehouseId);
+    }
+
     public function columns(): array
     {
         return [
-            Column::make('id')
-                ->hideIf(true),
             Column::make('Producto','product.name')
                 ->searchable()
                 ->sortable(),
