@@ -15,6 +15,7 @@ class IncompletedPurchaseOrdersController extends Controller
         return PurchaseOrder::query()
             ->join('suppliers','suppliers.id','purchase_orders.supplier_id')
             ->select('purchase_orders.id','suppliers.name','suppliers.ruc')
+            ->where('purchase_orders.completed',false)
             ->orderBy('name')
             ->when(
                 $request->search,

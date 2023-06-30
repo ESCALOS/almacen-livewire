@@ -1,5 +1,5 @@
 <x-modal.card title="Ordenes de compra" blur wire:model.defer="open">
-    <div class="px-4">
+    <div class="px-4" wire:loading.remove>
         <x-select
             label="Proveedor"
             wire:model="purchaseOrderId"
@@ -8,7 +8,7 @@
             option-label="name"
             option-value="id"
             option-description="ruc"
-            clearable="true"
+            always-fetch=true
         />
     </div>
     <div wire:loading.remove class="grid grid-cols-3 gap-4 p-4">
