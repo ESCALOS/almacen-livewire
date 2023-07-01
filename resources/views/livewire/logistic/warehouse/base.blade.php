@@ -1,4 +1,5 @@
 <div class="w-full">
+    @if ($warehouseId)
     <x-header-crud import="true">
         <x-select
             label="Almacen"
@@ -14,4 +15,9 @@
     </div>
     <livewire:logistic.warehouse.modal>
     <livewire:import-modal :model="$model" :columns="$columns">
+    @else
+        <div>
+            No hay ningún almacén creado
+        </div>
+    @endif
 </div>

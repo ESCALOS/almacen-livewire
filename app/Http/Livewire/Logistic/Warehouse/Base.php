@@ -15,7 +15,7 @@ class Base extends Component
     public $columns = ['Producto','Descripcion','Categoria','Unidad de Medida','Abreviacion','Cantidad','Precio'];
 
     public function mount(){
-        $this->warehouseId = Warehouse::first()->id;
+        $this->warehouseId = Warehouse::exists() ? Warehouse::first()->id : 0;
     }
 
     public function updatedWarehouseId(){

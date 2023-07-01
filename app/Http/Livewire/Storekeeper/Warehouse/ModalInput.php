@@ -95,7 +95,8 @@ class ModalInput extends Component
                     $purchaseOrder->save();
                 }
                 $this->alert('success','Ingreso exitoso');
-                $this->reset('purchaseOrderId','details');
+                $this->emit('refreshDatatable');
+                $this->reset('purchaseOrderId','details','open');
             });
         } catch (PDOException $e) {
             $this->alert('error','Error en el servidor: '. $e->getMessage());
