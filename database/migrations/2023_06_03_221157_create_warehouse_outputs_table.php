@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('warehouse_detail_id')->constrained();
             $table->decimal('quantity',10,2,true);
-            $table->text('reason_id')->nullable();
+            $table->decimal('price',10,2,true);
+            $table->foreignId('reason_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

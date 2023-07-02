@@ -21,13 +21,11 @@ class ModalInput extends Component
     public $purchaseOrderId = '';
     public $details = array();
 
-
     protected $listeners = ['openModal'];
 
     public function rules(){
         return [
             'details.*.quantity_to_enter' => 'required|numeric|min:0|lte:details.*.quantity',
-
         ];
     }
 

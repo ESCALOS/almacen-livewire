@@ -13,8 +13,8 @@
     </div>
     <div wire:loading.remove class="grid grid-cols-3 gap-4 p-4">
         @foreach ($details as $index => $detail)
-        <x-input label="Producto" value="{{ $detail['product'] }}"/>
-        <x-input label="Cantidad" value="{{ $detail['quantity'] }}"/>
+        <x-input label="Producto" readonly value="{{ $detail['product'] }}"/>
+        <x-input label="Cantidad" readonly value="{{ $detail['quantity'] }}"/>
         <x-input label="Recibido" wire:model.defer="details.{{ $index }}.quantity_to_enter"/>
         @endforeach
     </div>

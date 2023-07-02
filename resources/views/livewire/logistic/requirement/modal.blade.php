@@ -1,11 +1,11 @@
 <x-modal.card title="Ingresar Productos" blur wire:model.defer="open">
     <div class="grid grid-cols-2 gap-4 px-4 pb-4">
         <x-input type="number" label="RUC" max="20999999999" wire:model.lazy='supplierRuc'/>
-        <x-input type="text" label="Proveedor" value="{{ $supplierName }}"/>
-        <x-input type="text" label="Dirección" value="{{ $supplierAddress }}"/>
+        <x-input type="text" readonly label="Proveedor" value="{{ $supplierName }}"/>
+        <x-input type="text" readonly label="Dirección" value="{{ $supplierAddress }}"/>
         <div class="grid grid-cols-2 gap-4" style="justify-items: center; align-content:center">
-            <x-radio lg left-label="CONTADO" wire:model='paymentMethod' value="0" id="paymentMethod"/>
-            <x-radio lg left-label="CRÉDITO" wire:model='paymentMethod' value="1" id="paymentMethod"/>
+            <x-radio lg left-label="CONTADO" wire:model.defer='paymentMethod' value="0" id="paymentMethod"/>
+            <x-radio lg left-label="CRÉDITO" wire:model.defer='paymentMethod' value="1" id="paymentMethod"/>
         </div>
     </div>
     <hr>

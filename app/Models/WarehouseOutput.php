@@ -16,4 +16,8 @@ class WarehouseOutput extends Model
     public function User(){
         return $this->belongsTo(User::class);
     }
+
+    public function Reason(){
+        return $this->belongsTo(Reason::class);
+    }
 }
