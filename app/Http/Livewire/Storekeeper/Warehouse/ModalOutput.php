@@ -32,7 +32,7 @@ class ModalOutput extends Component
         return [
             'products.*.id' => 'required',
             'products.*.quantity' => 'required|numeric',
-            'products.*.quantity_to_leave' => 'required|numeric|gt:0|lte:details.*.quantity',
+            'products.*.quantity_to_leave' => 'required|numeric|gt:0|lte:products.*.quantity',
         ];
     }
 
@@ -89,7 +89,7 @@ class ModalOutput extends Component
             DB::transaction(function(){
                 foreach ($this->products as $product) {
                     $warehouseDetail = WarehouseDetail::where('product_id', $product['id'])->where('warehouse_id', $this->warehouseId)->first();
-                    if($product['quantity_to_leave']>$warehouseDetail['quantity']){
+                    if($product['quantity_to_leave']<=$warehouseDetail['quantity']){
                         $warehouseOutput = new WarehouseOutput();
                         $warehouseOutput->warehouse_detail_id = $warehouseDetail->id;
                         $warehouseOutput->quantity = $product['quantity_to_leave'];

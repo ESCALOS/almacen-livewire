@@ -46,6 +46,9 @@ class PurchaseOrderTable extends DataTableComponent
             Column::make("Método de Pago", "credit")
                 ->format(fn ($value) => $value ? 'CRÉDITO' : 'CONTADO')
                 ->collapseOnTablet(),
+            Column::make("Total", "amount")
+                ->format(fn ($value,$row) => 'S/.'.number_format($value,2))
+                ->collapseOnTablet(),
             Column::make("Por pagar", "amount")
                 ->format(fn ($value,$row) => 'S/.'.number_format($value - $row['liquidated_amount'],2))
                 ->collapseOnTablet(),
