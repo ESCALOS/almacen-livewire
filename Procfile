@@ -1,2 +1,2 @@
 release: composer install
-web: vendor/bin/heroku-php-apache2 public/
+web: npm install && npm run build && node server.js vendor/bin/heroku-php-apache2 public/
