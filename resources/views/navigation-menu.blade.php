@@ -12,6 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                @role('SOLICITANTE')
+                    <x-nav-link href="{{ route('requester.requirements') }}" :active="request()->routeIs('requester.requirements')">
+                        Solicitar
+                    </x-nav-link>
+                @endrole
                 @role('LOGISTICA')
                     <x-nav-link href="{{ route('logistic.products') }}" :active="request()->routeIs('logistic.products')">
                         {{ __('Products') }}
@@ -31,14 +36,9 @@
                         {{ __('Warehouse') }}
                     </x-nav-link>
                 @endrole
-                @role('SOLICITANTE')
-                    <x-nav-link href="{{ route('requester.requirements') }}" :active="request()->routeIs('requester.requirements')">
-                        {{ __('Requirements') }}
-                    </x-nav-link>
-                @endrole
                 @role('TESORERO')
                     <x-nav-link href="{{ route('treasurer.purchase-orders') }}" :active="request()->routeIs('treasurer.purchase-orders')">
-                        {{ __('Purchase Orders') }}
+                        Liquidar órden
                     </x-nav-link>
                 @endrole
                 </div>
